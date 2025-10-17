@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards cin.ignore()</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin: 20px 0 40px 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .card-wrapper {
+            perspective: 1000px;
+            height: 280px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            color: #2d3748;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .card-back .card-number {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .question {
+            font-size: 1.3em;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .answer {
+            font-size: 1.05em;
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        code {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+
+        .card-front code {
+            background: rgba(102, 126, 234, 0.15);
+            color: #667eea;
+        }
+
+        .card-back code {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .hint {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.85em;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Flashcards: cin.ignore() en C++</h1>
+    
+    <div class="container">
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">1</span>
+                    <div class="question">Qu'est-ce que <code>cin.ignore()</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">1</span>
+                    <div class="answer">C'est une fonction de la classe <code>istream</code> qui permet d'ignorer (supprimer) des caractères du flux d'entrée.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">2</span>
+                    <div class="question">Quelle est la syntaxe complète de <code>cin.ignore()</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">2</span>
+                    <div class="answer"><code>cin.ignore(n, delim)</code><br><br>
+                    <strong>n</strong> : nombre max de caractères à ignorer<br>
+                    <strong>delim</strong> : caractère délimiteur (optionnel)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">3</span>
+                    <div class="question">Pourquoi utiliser <code>cin.ignore()</code> après <code>cin >> variable</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">3</span>
+                    <div class="answer">Pour supprimer le caractère de nouvelle ligne (<code>\n</code>) laissé dans le buffer après une lecture avec <code>>></code>, qui sinon serait lu par <code>getline()</code>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">4</span>
+                    <div class="question">Quelle est la forme la plus courante de <code>cin.ignore()</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">4</span>
+                    <div class="answer"><code>cin.ignore(numeric_limits&lt;streamsize&gt;::max(), '\n')</code><br><br>
+                    Ignore tous les caractères jusqu'au prochain <code>\n</code> inclus.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">5</span>
+                    <div class="question">Que fait <code>cin.ignore()</code> sans paramètres ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">5</span>
+                    <div class="answer">Ignore exactement 1 caractère du flux d'entrée.<br><br>
+                    Équivalent à <code>cin.ignore(1)</code></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">6</span>
+                    <div class="question">Cas d'usage typique : mélange de <code>cin >></code> et <code>getline()</code></div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">6</span>
+                    <div class="answer"><code>int age;<br>
+                    cin >> age;<br>
+                    cin.ignore(); // Important !<br>
+                    string nom;<br>
+                    getline(cin, nom);</code></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">7</span>
+                    <div class="question">Que se passe-t-il si on oublie <code>cin.ignore()</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">7</span>
+                    <div class="answer"><code>getline()</code> lira le <code>\n</code> resté dans le buffer et retournera une chaîne vide au lieu d'attendre la saisie de l'utilisateur.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">8</span>
+                    <div class="question">Quelle bibliothèque inclure pour utiliser <code>numeric_limits</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">8</span>
+                    <div class="answer"><code>#include &lt;limits&gt;</code><br><br>
+                    Nécessaire pour utiliser <code>numeric_limits&lt;streamsize&gt;::max()</code></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card" onclick="this.classList.toggle('flipped')">
+                <div class="card-face card-front">
+                    <span class="card-number">9</span>
+                    <div class="question">Peut-on utiliser un délimiteur autre que <code>\n</code> ?</div>
+                    <span class="hint">Cliquez pour voir la réponse</span>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-number">9</span>
+                    <div class="answer">Oui ! Par exemple :<br>
+                    <code>cin.ignore(100, ',')</code><br><br>
+                    Ignore jusqu'à 100 caractères ou jusqu'à une virgule.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
