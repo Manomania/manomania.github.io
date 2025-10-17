@@ -3,50 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcards Modulaires</title>
+    <title>Flashcards C++</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="titre">🎯 Mes Flashcards</h1>
-    
-    <div class="container" id="cardsContainer"></div>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link active" onclick="showPage('home')">🏠 Accueil</a></li>
+            <li><a href="#cin" class="nav-link" onclick="showPage('cin')">📥 cin.ignore()</a></li>
+            <li><a href="#vectors" class="nav-link" onclick="showPage('vectors')">📊 Vectors</a></li>
+            <li><a href="#pointers" class="nav-link" onclick="showPage('pointers')">👉 Pointeurs</a></li>
+        </ul>
+    </nav>
 
-    <script>
-        // Charge le fichier JSON
-        fetch('flashcards.json')
-            .then(response => response.json())
-            .then(data => {
-                // Met à jour le titre
-                document.getElementById('titre').innerHTML = data.titre;
+    <!-- Page d'accueil -->
+    <div id="home" class="page active">
+        <div class="home-container">
+            <h1>🎓 Flashcards C++</h1>
+            <p>Choisis un sujet pour commencer à réviser</p>
+            
+            <div class="topic-grid">
+                <a class="topic-card" onclick="showPage('cin')">
+                    <h3>📥 cin.ignore()</h3>
+                    <p>9 cartes · Gestion des flux d'entrée</p>
+                </a>
+                
+                <a class="topic-card" onclick="showPage('vectors')">
+                    <h3>📊 Vectors</h3>
+                    <p>6 cartes · Conteneurs dynamiques</p>
+                </a>
+                
+                <a class="topic-card" onclick="showPage('pointers')">
+                    <h3>👉 Pointeurs</h3>
+                    <p>Bientôt disponible</p>
+                </a>
+            </div>
+        </div>
+    </div>
 
-                // Génère les cartes
-                const container = document.getElementById('cardsContainer');
+    <!-- Page cin.ignore() -->
+    <div id="cin" class="page">
+        <div class="flashcards-container">
+            <h1>📥 Flashcards: cin.ignore()</h1>
+            <div class="cards-grid" id="cinCards"></div>
+        </div>
+    </div>
 
-                data.cards.forEach((card, index) => {
-                    const cardWrapper = document.createElement('div');
-                    cardWrapper.className = 'card-wrapper';
-                    
-                    cardWrapper.innerHTML = `
-                        <div class="card" onclick="this.classList.toggle('flipped')">
-                            <div class="card-face card-front">
-                                <span class="card-number">${index + 1}</span>
-                                <div class="question">${card.question}</div>
-                                <span class="hint">Cliquez pour voir la réponse</span>
-                            </div>
-                            <div class="card-face card-back">
-                                <span class="card-number">${index + 1}</span>
-                                <div class="answer">${card.reponse}</div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    container.appendChild(cardWrapper);
-                });
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement des flashcards:', error);
-                document.getElementById('titre').innerHTML = '❌ Erreur de chargement';
-            });
-    </script>
+    <!-- Page Vectors -->
+    <div id="vectors" class="page">
+        <div class="flashcards-container">
+            <h1>📊 Flashcards: Vectors</h1>
+            <div class="cards-grid" id="vectorsCards"></div>
+        </div>
+    </div>
+
+    <!-- Page Pointeurs -->
+    <div id="pointers" class="page">
+        <div class="flashcards-container">
+            <h1>👉 Flashcards: Pointeurs</h1>
+            <div class="cards-grid">
+                <div style="color: white; text-align: center; grid-column: 1/-1; padding: 50px;">
+                    <h2>Contenu à venir...</h2>
+                    <p>Les flashcards sur les pointeurs seront bientôt disponibles !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
