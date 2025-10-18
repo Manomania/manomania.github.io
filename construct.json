@@ -1,0 +1,84 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce qu'un constructeur ?",
+      "reponse": "Méthode spéciale appelée <strong>automatiquement</strong> à la création d'un objet pour l'initialiser.<br><br>- Même nom que la classe<br>- Pas de type de retour<br>- Peut avoir des paramètres"
+    },
+    {
+      "question": "Syntaxe d'un constructeur ?",
+      "reponse": "<code>class MaClasse {<br>public:<br>&nbsp;&nbsp;MaClasse(); // constructeur<br>};</code><br><br>⚠️ Pas de <code>void</code>, pas de type de retour !"
+    },
+    {
+      "question": "Qu'est-ce qu'un constructeur par défaut ?",
+      "reponse": "Constructeur sans paramètres (ou avec paramètres tous par défaut).<br><br><code>MaClasse();</code> ou <code>MaClasse(int x = 0);</code><br><br>Généré automatiquement si aucun constructeur défini"
+    },
+    {
+      "question": "Quand le constructeur par défaut est-il appelé ?",
+      "reponse": "Lors de : <code>MaClasse obj;</code> (stack) ou <code>new MaClasse();</code> (heap)<br><br>⚠️ PAS lors de <code>MaClasse obj(5);</code> (appelle constructeur paramétré)"
+    },
+    {
+      "question": "Qu'est-ce qu'un constructeur paramétré ?",
+      "reponse": "Constructeur avec paramètres permettant d'initialiser l'objet avec des valeurs spécifiques.<br><br>Exemple : <code>MaClasse(int x, string s);</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'un destructeur ?",
+      "reponse": "Méthode spéciale appelée <strong>automatiquement</strong> à la destruction d'un objet pour libérer les ressources.<br><br>Syntaxe : <code>~MaClasse();</code> (préfixe tilde ~)"
+    },
+    {
+      "question": "Caractéristiques du destructeur ?",
+      "reponse": "- Préfixé par <code>~</code><br>- Même nom que la classe<br>- <strong>Aucun paramètre</strong><br>- <strong>Aucun type de retour</strong><br>- <strong>Un seul</strong> par classe<br>- Peut être <code>virtual</code> (important !)"
+    },
+    {
+      "question": "Quand le destructeur est-il appelé ?",
+      "reponse": "<strong>Objet stack :</strong> fin de scope<br><strong>Objet heap :</strong> lors du <code>delete</code><br><strong>Membre d'objet :</strong> destruction de l'objet parent<br><br>Ordre inverse des constructeurs"
+    },
+    {
+      "question": "Que doit faire un destructeur ?",
+      "reponse": "- Libérer la mémoire allouée (<code>delete</code>)<br>- Fermer les fichiers ouverts<br>- Libérer les ressources système<br><br><strong>Principe RAII</strong> : Resource Acquisition Is Initialization"
+    },
+    {
+      "question": "Qu'est-ce que la liste d'initialisation ?",
+      "reponse": "Syntaxe pour initialiser les attributs <strong>avant</strong> le corps du constructeur.<br><br><code>MaClasse::MaClasse() : _x(0), _y(5) {<br>&nbsp;&nbsp;// corps<br>}</code>"
+    },
+    {
+      "question": "Pourquoi préférer la liste d'initialisation ?",
+      "reponse": "- <strong>Performance</strong> : initialisation directe (pas d'affectation)<br>- <strong>Obligatoire</strong> pour : const, références, objets sans constructeur par défaut<br>- <strong>Ordre</strong> : respecte l'ordre de déclaration"
+    },
+    {
+      "question": "Différence entre initialisation et affectation dans un constructeur ?",
+      "reponse": "<strong>Liste d'init :</strong> <code>: _x(5)</code> → initialisation directe<br><strong>Corps :</strong> <code>{ _x = 5; }</code> → construction par défaut PUIS affectation<br><br>Liste d'init = plus efficace"
+    },
+    {
+      "question": "Dans quel ordre sont initialisés les attributs ?",
+      "reponse": "⚠️ Ordre de <strong>déclaration dans la classe</strong>, PAS l'ordre dans la liste d'initialisation !<br><br>Peut causer des bugs si mal ordonné"
+    },
+    {
+      "question": "Ordre d'appel des constructeurs avec héritage ?",
+      "reponse": "1. Constructeur de la classe <strong>parente</strong><br>2. Constructeurs des <strong>attributs membres</strong> (ordre de déclaration)<br>3. Corps du constructeur de la classe <strong>enfant</strong>"
+    },
+    {
+      "question": "Ordre d'appel des destructeurs avec héritage ?",
+      "reponse": "<strong>Inverse des constructeurs :</strong><br>1. Destructeur de la classe <strong>enfant</strong><br>2. Destructeurs des <strong>attributs membres</strong><br>3. Destructeur de la classe <strong>parente</strong>"
+    },
+    {
+      "question": "Que se passe-t-il si on oublie de définir un destructeur ?",
+      "reponse": "Le compilateur génère un destructeur par défaut qui :<br>- Appelle les destructeurs des attributs<br>- NE libère PAS la mémoire allouée avec <code>new</code><br><br>⚠️ Fuite mémoire si allocation dynamique !"
+    },
+    {
+      "question": "Peut-on appeler explicitement un constructeur ou destructeur ?",
+      "reponse": "<strong>Constructeur :</strong> non directement (utiliser <code>new</code> ou création d'objet)<br><strong>Destructeur :</strong> possible mais <strong>DANGEREUX</strong> : <code>obj.~MaClasse();</code><br><br>À éviter absolument en pratique"
+    },
+    {
+      "question": "Qu'affiche ce code ?<br><code>MaClasse obj1;<br>MaClasse obj2 = obj1;</code>",
+      "reponse": "Appelle le <strong>constructeur de copie</strong> (pas l'opérateur d'affectation).<br><br>⚠️ <code>=</code> ici est une initialisation, pas une affectation"
+    },
+    {
+      "question": "Message typique lors d'un constructeur/destructeur ?",
+      "reponse": "Convention 42 pour déboguer :<br><br><code>std::cout << \"Constructor called\" << std::endl;</code><br><code>std::cout << \"Destructor called\" << std::endl;</code>"
+    },
+    {
+      "question": "Pourquoi afficher des messages dans constructeurs/destructeurs ?",
+      "reponse": "Pour <strong>tracer</strong> :<br>- L'ordre d'appel<br>- Les copies non désirées<br>- Les fuites mémoire (constructeurs sans destructeurs)<br><br>Essentiel pour le débogage à 42"
+    }
+  ]
+}
