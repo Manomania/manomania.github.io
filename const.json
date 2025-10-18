@@ -66,4 +66,19 @@
     },
     {
       "question": "Que signifie <code>const</code> après une déclaration de fonction ?",
-      "reponse": "Qua
+      "reponse": "Qualifie la méthode membre comme <code>const</code> :<br><br><code>int foo() const;</code><br><br>⚠️ Ne concerne QUE les méthodes membres, pas les fonctions libres"
+    },
+    {
+      "question": "Erreur fréquente : différence entre déclaration et définition avec <code>const</code> ?",
+      "reponse": "Le <code>const</code> doit apparaître dans :<br>- La déclaration (.hpp) : <code>int get() const;</code><br>- L'implémentation (.cpp) : <code>int MaClasse::get() const { }</code><br><br>Oublier dans le .cpp = erreur de compilation"
+    },
+    {
+      "question": "Peut-on faire <code>const_cast</code> pour retirer <code>const</code> ?",
+      "reponse": "Techniquement OUI avec <code>const_cast<Type>(obj)</code>.<br><br>⚠️ <strong>DANGEREUX</strong> et considéré comme mauvaise pratique. À éviter absolument sauf cas très spécifiques"
+    },
+    {
+      "question": "Règle d'or pour <code>const</code> à 42 ?",
+      "reponse": "\"Utilisez <code>const</code> partout où c'est possible\"<br><br>- Paramètres en lecture seule : <code>const&</code><br>- Méthodes non-modifiantes : <code>const</code><br>- Variables immuables : <code>const</code>"
+    }
+  ]
+}
