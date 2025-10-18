@@ -1,100 +1,100 @@
 {
   "cards": [
-  {
-    "question": "Qu'est-ce que la surcharge d'opérateurs en C++ ?",
-    "reponse": "C'est la possibilité de redéfinir le comportement des opérateurs (<code>+</code>, <code>-</code>, <code>==</code>, etc.) pour les types personnalisés (classes), afin de rendre leur utilisation plus intuitive et naturelle."
-  },
-  {
-    "question": "Quelle est la syntaxe générale pour surcharger un opérateur en tant que méthode membre ?",
-    "reponse": "<code>Type operator@(paramètres)</code> où <code>@</code> est l'opérateur à surcharger. Exemple : <code>Vecteur operator+(const Vecteur& autre) const;</code>"
-  },
-  {
-    "question": "Quelle est la syntaxe pour surcharger un opérateur en tant que fonction libre (non-membre) ?",
-    "reponse": "<code>Type operator@(param1, param2)</code>. Exemple : <code>Vecteur operator+(const Vecteur& v1, const Vecteur& v2);</code>. Nécessite souvent <code>friend</code> pour accéder aux membres privés."
-  },
-  {
-    "question": "Quels sont les 5 opérateurs qui NE PEUVENT PAS être surchargés en C++ ?",
-    "reponse": "<code>::</code> (résolution de portée), <code>.</code> (accès membre), <code>.*</code> (pointeur vers membre), <code>?:</code> (ternaire), et <code>sizeof</code>"
-  },
-  {
-    "question": "Pourquoi surcharger <code>operator<<</code> en fonction libre plutôt qu'en méthode membre ?",
-    "reponse": "Parce que <code>cout << objet</code> nécessite que <code>ostream</code> soit à gauche. En méthode membre, on devrait écrire <code>objet << cout</code> (contre-intuitif). La fonction libre permet : <code>ostream& operator<<(ostream& os, const MaClasse& obj)</code>"
-  },
-  {
-    "question": "Quelle est la signature correcte pour surcharger <code>operator<<</code> pour l'affichage ?",
-    "reponse": "<code>friend ostream& operator<<(ostream& os, const MaClasse& obj)</code>. Retourne <code>ostream&</code> pour permettre le chaînage (<code>cout << a << b</code>)"
-  },
-  {
-    "question": "Pourquoi faut-il retourner une référence dans <code>operator=</code> ?",
-    "reponse": "Pour permettre les affectations en chaîne (<code>a = b = c</code>) et éviter des copies inutiles. Signature : <code>MaClasse& operator=(const MaClasse& autre)</code>"
-  },
-  {
-    "question": "Que doit toujours faire <code>operator=</code> avant de copier ?",
-    "reponse": "Vérifier l'auto-affectation avec <code>if (this == &autre) return *this;</code> pour éviter des problèmes si on fait <code>obj = obj;</code>"
-  },
-  {
-    "question": "Quelle est la différence entre <code>operator++</code> préfixe et postfixe ?",
-    "reponse": "Préfixe : <code>Type& operator++()</code> (retourne référence, incrémente puis retourne). Postfixe : <code>Type operator++(int)</code> (le <code>int</code> dummy distingue les deux, retourne copie avant incrément)"
-  },
-  {
-    "question": "Pourquoi <code>operator[]</code> doit-il retourner une référence ?",
-    "reponse": "Pour permettre la modification : <code>tableau[i] = valeur;</code>. Signature : <code>Type& operator[](size_t index)</code>. On peut aussi ajouter une version <code>const</code> retournant <code>const Type&</code>"
-  },
-  {
-    "question": "Comment surcharger <code>operator()</code> et à quoi sert-il ?",
-    "reponse": "Syntaxe : <code>Type operator()(paramètres)</code>. Transforme l'objet en foncteur (callable object). Exemple : <code>Multiplicateur m(5); int result = m(10); // retourne 50</code>"
-  },
-  {
-    "question": "Quels opérateurs de comparaison doit-on typiquement surcharger ensemble ?",
-    "reponse": "<code>==</code> et <code>!=</code> (opposés), puis <code><</code>, <code>></code>, <code><=</code>, <code>>=</code>. Depuis C++20, <code>operator<=></code> (spaceship) peut remplacer les 4 derniers."
-  },
-  {
-    "question": "Pourquoi déclarer les paramètres en <code>const&</code> dans les surcharges d'opérateurs ?",
-    "reponse": "Pour éviter les copies inutiles (efficacité) et garantir qu'on ne modifie pas les opérandes. Exemple : <code>bool operator==(const MaClasse& autre) const</code>"
-  },
-  {
-    "question": "Que signifie le <code>const</code> à la fin d'une surcharge d'opérateur membre ?",
-    "reponse": "Que la méthode ne modifie pas l'objet courant (<code>*this</code>). Essentiel pour les opérateurs qui ne changent pas l'état : <code>operator+</code>, <code>operator==</code>, etc."
-  },
-  {
-    "question": "Comment surcharger <code>operator+=</code> et quelle est sa relation avec <code>operator+</code> ?",
-    "reponse": "<code>MaClasse& operator+=(const MaClasse& autre)</code> modifie l'objet et retourne <code>*this</code>. On peut implémenter <code>operator+</code> en utilisant <code>operator+=</code> : <code>return MaClasse(a) += b;</code>"
-  },
-  {
-    "question": "Pourquoi utiliser <code>friend</code> pour certaines surcharges d'opérateurs ?",
-    "reponse": "Pour que la fonction libre (non-membre) puisse accéder aux membres privés de la classe. Commun pour <code>operator<<</code>, <code>operator>></code> ou les opérateurs binaires symétriques."
-  },
-  {
-    "question": "Quels opérateurs DOIVENT obligatoirement être surchargés comme méthodes membres ?",
-    "reponse": "<code>=</code> (affectation), <code>[]</code> (indexation), <code>()</code> (appel de fonction), et <code>-></code> (accès membre par pointeur)"
-  },
-  {
-    "question": "Comment surcharger <code>operator-></code> et quand l'utiliser ?",
-    "reponse": "Retourne un pointeur ou un objet avec <code>operator-></code>. Utilisé pour les smart pointers : <code>Type* operator->() { return ptr; }</code>. Permet <code>objet->methode()</code>"
-  },
-  {
+    {
+      "question": "Qu'est-ce que la surcharge d'opérateurs en C++ ?",
+      "reponse": "C'est la possibilité de redéfinir le comportement des opérateurs (<code>+</code>, <code>-</code>, <code>==</code>, etc.) pour les types personnalisés (classes), afin de rendre leur utilisation plus intuitive et naturelle."
+    },
+    {
+      "question": "Quelle est la syntaxe générale pour surcharger un opérateur en tant que méthode membre ?",
+      "reponse": "<code>Type operator@(paramètres)</code> où <code>@</code> est l'opérateur à surcharger. Exemple : <code>Vecteur operator+(const Vecteur& autre) const;</code>"
+    },
+    {
+      "question": "Quelle est la syntaxe pour surcharger un opérateur en tant que fonction libre (non-membre) ?",
+      "reponse": "<code>Type operator@(param1, param2)</code>. Exemple : <code>Vecteur operator+(const Vecteur& v1, const Vecteur& v2);</code>. Nécessite souvent <code>friend</code> pour accéder aux membres privés."
+    },
+    {
+      "question": "Quels sont les 5 opérateurs qui NE PEUVENT PAS être surchargés en C++ ?",
+      "reponse": "<code>::</code> (résolution de portée), <code>.</code> (accès membre), <code>.*</code> (pointeur vers membre), <code>?:</code> (ternaire), et <code>sizeof</code>"
+    },
+    {
+      "question": "Pourquoi surcharger <code>operator<<</code> en fonction libre plutôt qu'en méthode membre ?",
+      "reponse": "Parce que <code>cout << objet</code> nécessite que <code>ostream</code> soit à gauche. En méthode membre, on devrait écrire <code>objet << cout</code> (contre-intuitif). La fonction libre permet : <code>ostream& operator<<(ostream& os, const MaClasse& obj)</code>"
+    },
+    {
+      "question": "Quelle est la signature correcte pour surcharger <code>operator<<</code> pour l'affichage ?",
+      "reponse": "<code>friend ostream& operator<<(ostream& os, const MaClasse& obj)</code>. Retourne <code>ostream&</code> pour permettre le chaînage (<code>cout << a << b</code>)"
+    },
+    {
+      "question": "Pourquoi faut-il retourner une référence dans <code>operator=</code> ?",
+      "reponse": "Pour permettre les affectations en chaîne (<code>a = b = c</code>) et éviter des copies inutiles. Signature : <code>MaClasse& operator=(const MaClasse& autre)</code>"
+    },
+    {
+      "question": "Que doit toujours faire <code>operator=</code> avant de copier ?",
+      "reponse": "Vérifier l'auto-affectation avec <code>if (this == &autre) return *this;</code> pour éviter des problèmes si on fait <code>obj = obj;</code>"
+    },
+    {
+      "question": "Quelle est la différence entre <code>operator++</code> préfixe et postfixe ?",
+      "reponse": "Préfixe : <code>Type& operator++()</code> (retourne référence, incrémente puis retourne). Postfixe : <code>Type operator++(int)</code> (le <code>int</code> dummy distingue les deux, retourne copie avant incrément)"
+    },
+    {
+      "question": "Pourquoi <code>operator[]</code> doit-il retourner une référence ?",
+      "reponse": "Pour permettre la modification : <code>tableau[i] = valeur;</code>. Signature : <code>Type& operator[](size_t index)</code>. On peut aussi ajouter une version <code>const</code> retournant <code>const Type&</code>"
+    },
+    {
+      "question": "Comment surcharger <code>operator()</code> et à quoi sert-il ?",
+      "reponse": "Syntaxe : <code>Type operator()(paramètres)</code>. Transforme l'objet en foncteur (callable object). Exemple : <code>Multiplicateur m(5); int result = m(10); // retourne 50</code>"
+    },
+    {
+      "question": "Quels opérateurs de comparaison doit-on typiquement surcharger ensemble ?",
+      "reponse": "<code>==</code> et <code>!=</code> (opposés), puis <code><</code>, <code>></code>, <code><=</code>, <code>>=</code>. Depuis C++20, <code>operator<=></code> (spaceship) peut remplacer les 4 derniers."
+    },
+    {
+      "question": "Pourquoi déclarer les paramètres en <code>const&</code> dans les surcharges d'opérateurs ?",
+      "reponse": "Pour éviter les copies inutiles (efficacité) et garantir qu'on ne modifie pas les opérandes. Exemple : <code>bool operator==(const MaClasse& autre) const</code>"
+    },
+    {
+      "question": "Que signifie le <code>const</code> à la fin d'une surcharge d'opérateur membre ?",
+      "reponse": "Que la méthode ne modifie pas l'objet courant (<code>*this</code>). Essentiel pour les opérateurs qui ne changent pas l'état : <code>operator+</code>, <code>operator==</code>, etc."
+    },
+    {
+      "question": "Comment surcharger <code>operator+=</code> et quelle est sa relation avec <code>operator+</code> ?",
+      "reponse": "<code>MaClasse& operator+=(const MaClasse& autre)</code> modifie l'objet et retourne <code>*this</code>. On peut implémenter <code>operator+</code> en utilisant <code>operator+=</code> : <code>return MaClasse(a) += b;</code>"
+    },
+    {
+      "question": "Pourquoi utiliser <code>friend</code> pour certaines surcharges d'opérateurs ?",
+      "reponse": "Pour que la fonction libre (non-membre) puisse accéder aux membres privés de la classe. Commun pour <code>operator<<</code>, <code>operator>></code> ou les opérateurs binaires symétriques."
+    },
+    {
+      "question": "Quels opérateurs DOIVENT obligatoirement être surchargés comme méthodes membres ?",
+      "reponse": "<code>=</code> (affectation), <code>[]</code> (indexation), <code>()</code> (appel de fonction), et <code>-></code> (accès membre par pointeur)"
+    },
+    {
+      "question": "Comment surcharger <code>operator-></code> et quand l'utiliser ?",
+      "reponse": "Retourne un pointeur ou un objet avec <code>operator-></code>. Utilisé pour les smart pointers : <code>Type* operator->() { return ptr; }</code>. Permet <code>objet->methode()</code>"
+    },
+    {
     "question": "Que retourne typiquement <code>operator+</code> entre deux objets ?",
     "reponse": "Un nouvel objet (par valeur, pas référence) : <code>MaClasse operator+(const MaClasse& autre) const { return MaClasse(résultat); }</code>. Ne modifie pas les opérandes originaux."
-  },
-  {
-    "question": "Quelle est la bonne pratique pour implémenter <code>operator!=</code> ?",
-    "reponse": "L'implémenter en termes de <code>operator==</code> : <code>bool operator!=(const MaClasse& autre) const { return !(*this == autre); }</code>. Évite la duplication de code."
-  },
-  {
-    "question": "Comment surcharger <code>operator>></code> pour la saisie au clavier ?",
-    "reponse": "<code>friend istream& operator>>(istream& is, MaClasse& obj)</code>. Paramètre NON-const car l'objet est modifié. Retourne <code>istream&</code> pour le chaînage."
-  },
-  {
-    "question": "Peut-on changer le nombre d'opérandes ou la priorité d'un opérateur en le surchargeant ?",
-    "reponse": "NON. La surcharge conserve le nombre d'opérandes (unaire/binaire), la priorité et l'associativité de l'opérateur original. On ne peut que redéfinir son comportement."
-  },
-  {
-    "question": "Comment implémenter <code>operator bool()</code> et à quoi sert-il ?",
-    "reponse": "Conversion implicite vers <code>bool</code> : <code>explicit operator bool() const</code>. Permet <code>if (objet)</code>. Le <code>explicit</code> évite les conversions implicites non désirées."
-  },
-  {
-    "question": "Pourquoi préférer les fonctions libres pour les opérateurs binaires symétriques ?",
-    "reponse": "Pour permettre les conversions implicites sur les deux opérandes. Avec une méthode membre, seul le deuxième opérande peut être converti. Exemple : <code>2 + complex</code> vs <code>complex + 2</code>"
-  }
-]
+    },
+    {
+      "question": "Quelle est la bonne pratique pour implémenter <code>operator!=</code> ?",
+      "reponse": "L'implémenter en termes de <code>operator==</code> : <code>bool operator!=(const MaClasse& autre) const { return !(*this == autre); }</code>. Évite la duplication de code."
+    },
+    {
+      "question": "Comment surcharger <code>operator>></code> pour la saisie au clavier ?",
+      "reponse": "<code>friend istream& operator>>(istream& is, MaClasse& obj)</code>. Paramètre NON-const car l'objet est modifié. Retourne <code>istream&</code> pour le chaînage."
+    },
+    {
+      "question": "Peut-on changer le nombre d'opérandes ou la priorité d'un opérateur en le surchargeant ?",
+      "reponse": "NON. La surcharge conserve le nombre d'opérandes (unaire/binaire), la priorité et l'associativité de l'opérateur original. On ne peut que redéfinir son comportement."
+    },
+    {
+      "question": "Comment implémenter <code>operator bool()</code> et à quoi sert-il ?",
+      "reponse": "Conversion implicite vers <code>bool</code> : <code>explicit operator bool() const</code>. Permet <code>if (objet)</code>. Le <code>explicit</code> évite les conversions implicites non désirées."
+    },
+    {
+      "question": "Pourquoi préférer les fonctions libres pour les opérateurs binaires symétriques ?",
+      "reponse": "Pour permettre les conversions implicites sur les deux opérandes. Avec une méthode membre, seul le deuxième opérande peut être converti. Exemple : <code>2 + complex</code> vs <code>complex + 2</code>"
+    }
+  ]
 }
