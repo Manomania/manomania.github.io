@@ -1,0 +1,104 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce que le polymorphisme en C++ ?",
+      "reponse": "Capacité d'un objet à prendre plusieurs formes.<br><br>Permet à un pointeur/référence de type <strong>parent</strong> de manipuler des objets <strong>enfants</strong> et d'appeler leurs méthodes spécifiques.<br><br>Nécessite le mot-clé <code>virtual</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'une méthode <code>virtual</code> ?",
+      "reponse": "Méthode déclarée dans la classe de base avec le mot-clé <code>virtual</code>.<br><br>Permet la <strong>résolution dynamique</strong> : la méthode appelée dépend du type réel de l'objet, pas du type du pointeur.<br><br><code>virtual void foo();</code>"
+    },
+    {
+      "question": "Différence entre méthode normale et méthode <code>virtual</code> ?",
+      "reponse": "<strong>Normale</strong> : résolution à la compilation (type du pointeur)<br><strong>Virtual</strong> : résolution à l'exécution (type réel de l'objet)<br><br>Virtual permet le polymorphisme"
+    },
+    {
+      "question": "Exemple concret du problème sans <code>virtual</code> ?",
+      "reponse": "<code>class Animal { void crier(); };<br>class Chien : public Animal { void crier(); };<br><br>Animal* a = new Chien();<br>a->crier(); // appelle Animal::crier ❌</code><br><br>Avec <code>virtual</code> → appelle Chien::crier ✅"
+    },
+    {
+      "question": "Où placer le mot-clé <code>virtual</code> ?",
+      "reponse": "<strong>Uniquement dans la classe de base</strong> (déclaration .hpp) :<br><br><code>class Parent {<br>public:<br>&nbsp;&nbsp;virtual void foo();<br>};</code><br><br>Les enfants héritent automatiquement du comportement virtual"
+    },
+    {
+      "question": "Faut-il remettre <code>virtual</code> dans la classe dérivée ?",
+      "reponse": "<strong>Optionnel</strong> mais recommandé pour la lisibilité :<br><br><code>class Enfant : public Parent {<br>public:<br>&nbsp;&nbsp;virtual void foo(); // optionnel mais clair<br>};</code><br><br>Indique clairement que c'est un override"
+    },
+    {
+      "question": "Qu'est-ce que la vtable (table des méthodes virtuelles) ?",
+      "reponse": "Structure interne créée par le compilateur pour chaque classe avec méthodes <code>virtual</code>.<br><br>Contient les <strong>pointeurs vers les vraies implémentations</strong>.<br><br>Permet la résolution dynamique au runtime"
+    },
+    {
+      "question": "Coût en mémoire d'une méthode <code>virtual</code> ?",
+      "reponse": "Chaque objet avec méthodes virtual contient un <strong>vptr</strong> (pointeur caché vers la vtable).<br><br>Taille : généralement 8 octets (64-bit)<br><br>Coût minimal mais existant"
+    },
+    {
+      "question": "Pourquoi le destructeur DOIT être <code>virtual</code> dans une classe de base ?",
+      "reponse": "Pour garantir l'appel du destructeur de la classe dérivée lors d'un <code>delete</code> via pointeur parent :<br><br><code>Parent* p = new Enfant();<br>delete p; // sans virtual → fuite mémoire !</code><br><br><strong>CRITIQUE pour éviter les fuites</strong>"
+    },
+    {
+      "question": "Que se passe-t-il sans destructeur <code>virtual</code> ?",
+      "reponse": "<code>Parent* p = new Enfant();<br>delete p;</code><br><br>1. Appelle SEULEMENT ~Parent()<br>2. ~Enfant() N'EST JAMAIS APPELÉ<br>3. Fuite de la mémoire allouée par Enfant<br><br>⚠️ <strong>Erreur classique</strong>"
+    },
+    {
+      "question": "Syntaxe du destructeur <code>virtual</code> ?",
+      "reponse": "<code>class Parent {<br>public:<br>&nbsp;&nbsp;virtual ~Parent();<br>};</code><br><br>Simple ajout de <code>virtual</code> devant le destructeur.<br><br><strong>Réflexe obligatoire</strong> dès qu'il y a héritage"
+    },
+    {
+      "question": "Quand une classe a-t-elle besoin de méthodes <code>virtual</code> ?",
+      "reponse": "Dès qu'elle est destinée à être héritée ET qu'on veut du polymorphisme :<br><br>- Classe de base d'une hiérarchie<br>- Méthodes qui seront redéfinies<br>- <strong>Toujours</strong> le destructeur<br><br>Si pas d'héritage prévu : inutile"
+    },
+    {
+      "question": "Qu'est-ce qu'une méthode virtuelle pure ?",
+      "reponse": "Méthode sans implémentation, déclarée avec <code>= 0</code> :<br><br><code>virtual void foo() = 0;</code><br><br>Rend la classe <strong>abstraite</strong> : impossible de l'instancier directement"
+    },
+    {
+      "question": "Qu'est-ce qu'une classe abstraite ?",
+      "reponse": "Classe contenant au moins une méthode virtuelle pure.<br><br>- Ne peut PAS être instanciée<br>- Sert de <strong>contrat</strong> pour les classes dérivées<br>- Les enfants doivent implémenter les méthodes pures<br><br>Utilisée comme interface"
+    },
+    {
+      "question": "Exemple de classe abstraite ?",
+      "reponse": "<code>class Animal {<br>public:<br>&nbsp;&nbsp;virtual void crier() = 0; // pure<br>&nbsp;&nbsp;virtual ~Animal() {}<br>};<br><br>Animal a; // ❌ ERREUR compilation<br>Animal* ptr = new Chien(); // ✅ OK</code>"
+    },
+    {
+      "question": "Comment rendre une classe dérivée concrète ?",
+      "reponse": "Implémenter <strong>toutes</strong> les méthodes virtuelles pures du parent :<br><br><code>class Chien : public Animal {<br>public:<br>&nbsp;&nbsp;void crier() { /* implémentation */ }<br>};<br><br>Chien c; // ✅ OK maintenant</code>"
+    },
+    {
+      "question": "Peut-on avoir une implémentation pour une méthode virtuelle pure ?",
+      "reponse": "OUI ! On peut fournir une implémentation par défaut :<br><br><code>class Base {<br>public:<br>&nbsp;&nbsp;virtual void foo() = 0;<br>};<br><br>void Base::foo() { /* défaut */ }</code><br><br>Les enfants doivent quand même l'implémenter, mais peuvent appeler <code>Base::foo()</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'une interface en C++ ?",
+      "reponse": "Classe abstraite ne contenant QUE des méthodes virtuelles pures (pas d'attributs, pas d'implémentation).<br><br><code>class IInterface {<br>public:<br>&nbsp;&nbsp;virtual void foo() = 0;<br>&nbsp;&nbsp;virtual ~IInterface() {}<br>};</code><br><br>Convention : préfixe <code>I</code>"
+    },
+    {
+      "question": "Pourquoi utiliser des interfaces ?",
+      "reponse": "- Définir un <strong>contrat</strong> sans imposer l'implémentation<br>- Polymorphisme sans héritage d'implémentation<br>- Découplage du code<br>- Testabilité (mock objects)<br><br>Design pattern fondamental"
+    },
+    {
+      "question": "Différence entre classe abstraite et interface ?",
+      "reponse": "<strong>Interface</strong> : 100% méthodes pures, pas d'attributs<br><strong>Classe abstraite</strong> : peut avoir implémentations et attributs<br><br>Interface = contrat pur<br>Classe abstraite = base partielle"
+    },
+    {
+      "question": "Peut-on créer un pointeur vers une classe abstraite ?",
+      "reponse": "OUI ! C'est justement l'intérêt :<br><br><code>Animal* ptr; // ✅ OK<br>ptr = new Chien(); // ✅ OK<br>ptr->crier(); // polymorphisme</code><br><br>Seule l'<strong>instanciation directe</strong> est interdite"
+    },
+    {
+      "question": "Qu'est-ce que le <em>late binding</em> (liaison tardive) ?",
+      "reponse": "Résolution de la méthode à appeler à l'<strong>exécution</strong> (runtime), pas à la compilation.<br><br>Activé par <code>virtual</code>.<br><br>Oppose à <em>early binding</em> (liaison précoce, à la compilation)"
+    },
+    {
+      "question": "Performance : méthode <code>virtual</code> vs normale ?",
+      "reponse": "Méthode virtual légèrement plus lente :<br>- Indirection via vptr et vtable<br>- Pas d'inlining possible<br><br>Coût négligeable dans 99% des cas.<br><br>⚠️ Ne pas optimiser prématurément"
+    },
+    {
+      "question": "Peut-on avoir un constructeur <code>virtual</code> ?",
+      "reponse": "<strong>NON</strong>, impossible en C++.<br><br>Raison : l'objet n'existe pas encore, donc pas de vtable.<br><br>Alternative : <em>factory pattern</em> avec méthode virtuelle <code>clone()</code>"
+    },
+    {
+      "question": "Pattern typique de la méthode <code>clone()</code> virtuelle ?",
+      "reponse": "<code>class Base {<br>public:<br>&nbsp;&nbsp;virtual Base* clone() const = 0;<br>};<br><br>class Derived : public Base {<br>public:<br>&nbsp;&nbsp;Derived* clone() const {<br>&nbsp;&nbsp;&nbsp;&nbsp;return new Derived(*this);<br>&nbsp;&nbsp;}<br>};</code><br><br>Simule un \"constructeur virtuel\""
+    }
+  ]
+}
