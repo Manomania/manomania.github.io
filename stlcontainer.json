@@ -1,0 +1,104 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce que la STL (Standard Template Library) ?",
+      "reponse": "Bibliothèque standard C++ fournissant des <strong>structures de données génériques</strong> et des algorithmes.<br><br>Composants : conteneurs, itérateurs, algorithmes, foncteurs"
+    },
+    {
+      "question": "Quelles sont les 3 catégories de conteneurs STL ?",
+      "reponse": "<strong>Séquentiels</strong> : vector, list, deque<br><strong>Associatifs</strong> : set, map, multiset, multimap<br><strong>Adaptateurs</strong> : stack, queue, priority_queue<br><br>Chacun avec ses caractéristiques de performance"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::vector</code> ?",
+      "reponse": "Tableau dynamique redimensionnable.<br><br>- Accès rapide par index : O(1)<br>- Insertion/suppression en fin : O(1) amorti<br>- Insertion/suppression au milieu : O(n)<br><br><code>#include &lt;vector&gt;</code>"
+    },
+    {
+      "question": "Comment créer et utiliser un <code>vector</code> ?",
+      "reponse": "<code>#include &lt;vector&gt;<br><br>std::vector&lt;int&gt; v;<br>v.push_back(10); // ajout fin<br>v[0] = 5; // accès<br>v.size(); // taille<br>v.clear(); // vider</code>"
+    },
+    {
+      "question": "Différence entre <code>size()</code> et <code>capacity()</code> d'un vector ?",
+      "reponse": "<strong>size()</strong> : nombre d'éléments actuels<br><strong>capacity()</strong> : espace alloué (peut être > size)<br><br>Quand size == capacity → réallocation au prochain push_back"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::list</code> ?",
+      "reponse": "Liste doublement chaînée.<br><br>- Insertion/suppression partout : O(1)<br>- Pas d'accès direct par index<br>- Plus de mémoire que vector (pointeurs)<br><br><code>#include &lt;list&gt;</code>"
+    },
+    {
+      "question": "Quand utiliser <code>list</code> plutôt que <code>vector</code> ?",
+      "reponse": "- Insertions/suppressions fréquentes au milieu<br>- Pas besoin d'accès par index<br>- Les éléments ne doivent pas être contigus<br><br>Sinon : <strong>vector est presque toujours meilleur</strong> (cache-friendly)"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::deque</code> ?",
+      "reponse": "<strong>Double-Ended Queue</strong> : file à deux extrémités.<br><br>- Insertion/suppression rapide aux deux bouts : O(1)<br>- Accès par index : O(1)<br>- Compromis entre vector et list<br><br><code>#include &lt;deque&gt;</code>"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::map</code> ?",
+      "reponse": "Conteneur associatif stockant des paires <strong>clé-valeur</strong> triées.<br><br>- Recherche/insertion/suppression : O(log n)<br>- Implémenté avec arbre rouge-noir<br>- Clés uniques et triées<br><br><code>#include &lt;map&gt;</code>"
+    },
+    {
+      "question": "Comment utiliser un <code>map</code> ?",
+      "reponse": "<code>std::map&lt;std::string, int&gt; ages;<br>ages[\"Alice\"] = 25; // insertion<br>ages[\"Bob\"] = 30;<br>int age = ages[\"Alice\"]; // accès<br><br>// Vérifier existence<br>if (ages.find(\"Eve\") != ages.end()) { }</code>"
+    },
+    {
+      "question": "Différence entre <code>map</code> et <code>multimap</code> ?",
+      "reponse": "<strong>map</strong> : clés uniques<br><strong>multimap</strong> : plusieurs valeurs par clé<br><br><code>multimap</code> ne supporte pas <code>operator[]</code> (ambiguïté)<br><br>Utiliser <code>insert()</code> et <code>equal_range()</code>"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::set</code> ?",
+      "reponse": "Ensemble d'éléments <strong>uniques et triés</strong>.<br><br>- Recherche/insertion/suppression : O(log n)<br>- Pas de doublons<br>- Implémenté avec arbre rouge-noir<br><br><code>#include &lt;set&gt;</code>"
+    },
+    {
+      "question": "Différence entre <code>set</code> et <code>multiset</code> ?",
+      "reponse": "<strong>set</strong> : éléments uniques<br><strong>multiset</strong> : doublons autorisés<br><br>Exemple : {1, 2, 3} pour set vs {1, 1, 2, 3} pour multiset"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::stack</code> ?",
+      "reponse": "Adaptateur de conteneur implémentant une <strong>pile (LIFO)</strong>.<br><br>Opérations :<br>- <code>push()</code> : empiler<br>- <code>pop()</code> : dépiler<br>- <code>top()</code> : voir le sommet<br><br><code>#include &lt;stack&gt;</code>"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::queue</code> ?",
+      "reponse": "Adaptateur de conteneur implémentant une <strong>file (FIFO)</strong>.<br><br>Opérations :<br>- <code>push()</code> : enfiler<br>- <code>pop()</code> : défiler<br>- <code>front()</code> : voir le premier<br><br><code>#include &lt;queue&gt;</code>"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::priority_queue</code> ?",
+      "reponse": "File de priorité : le plus grand élément est toujours devant.<br><br>- Implémentée avec un tas (heap)<br>- Insertion : O(log n)<br>- Accès au max : O(1)<br>- Suppression du max : O(log n)"
+    },
+    {
+      "question": "Toutes les méthodes communes à tous les conteneurs ?",
+      "reponse": "<code>size()</code> : nombre d'éléments<br><code>empty()</code> : teste si vide<br><code>clear()</code> : vider le conteneur<br><code>begin()</code>, <code>end()</code> : itérateurs<br><br>Interface uniforme STL"
+    },
+    {
+      "question": "Différence entre <code>erase()</code> et <code>clear()</code> ?",
+      "reponse": "<strong>clear()</strong> : supprime tous les éléments<br><strong>erase()</strong> : supprime un élément ou une plage spécifique<br><br><code>v.clear(); // tout<br>v.erase(v.begin()); // premier élément</code>"
+    },
+    {
+      "question": "Comment connaître la taille d'un conteneur ?",
+      "reponse": "<code>size_t taille = conteneur.size();</code><br><br>Retourne <code>size_t</code> (entier non signé).<br><br>⚠️ Attention aux comparaisons avec int signé (warning)"
+    },
+    {
+      "question": "Comment vérifier si un conteneur est vide ?",
+      "reponse": "✅ <code>if (conteneur.empty()) { }</code><br><br>❌ Éviter : <code>if (conteneur.size() == 0)</code><br><br><code>empty()</code> peut être O(1) même si <code>size()</code> est O(n) (ex: list en C++98)"
+    },
+    {
+      "question": "Comment copier un conteneur ?",
+      "reponse": "<strong>Constructeur de copie</strong> :<br><code>std::vector&lt;int&gt; v2(v1);</code><br><br><strong>Affectation</strong> :<br><code>std::vector&lt;int&gt; v2 = v1;</code><br><br>Copie profonde automatique"
+    },
+    {
+      "question": "Les conteneurs gèrent-ils automatiquement la mémoire ?",
+      "reponse": "OUI ! Principe RAII :<br><br>- Allocation automatique à l'ajout<br>- Libération automatique à la destruction<br>- Redimensionnement automatique<br><br>✅ Pas de <code>new/delete</code> manuel nécessaire"
+    },
+    {
+      "question": "Que contient réellement un conteneur de pointeurs ?",
+      "reponse": "Les <strong>adresses</strong>, pas les objets :<br><br><code>std::vector&lt;Type*&gt; v;<br>v.push_back(new Type());</code><br><br>⚠️ <code>clear()</code> ne fait PAS de <code>delete</code> !<br>→ Vous devez libérer manuellement"
+    },
+    {
+      "question": "Comment libérer un vector de pointeurs ?",
+      "reponse": "<code>for (size_t i = 0; i < v.size(); i++)<br>&nbsp;&nbsp;delete v[i];<br>v.clear();</code><br><br>Ou avec itérateurs (voir section suivante).<br><br>Solution moderne (C++11) : <code>std::unique_ptr</code>"
+    },
+    {
+      "question": "Complexité : que signifie O(1), O(n), O(log n) ?",
+      "reponse": "<strong>O(1)</strong> : temps constant (indépendant de la taille)<br><strong>O(n)</strong> : temps linéaire (proportionnel à n)<br><strong>O(log n)</strong> : temps logarithmique (division par 2 à chaque étape)<br><br>Notation Big-O"
+    }
+  ]
+}
