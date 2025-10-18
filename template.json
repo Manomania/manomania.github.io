@@ -1,0 +1,104 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce qu'un template en C++ ?",
+      "reponse": "Mécanisme de <strong>programmation générique</strong> permettant d'écrire du code fonctionnant avec n'importe quel type.<br><br>Le compilateur génère du code spécialisé pour chaque type utilisé"
+    },
+    {
+      "question": "Quels sont les deux types de templates ?",
+      "reponse": "<strong>Templates de fonction</strong> : fonctions génériques<br><strong>Templates de classe</strong> : classes génériques<br><br>Exemple : <code>std::vector&lt;T&gt;</code> est un template de classe"
+    },
+    {
+      "question": "Syntaxe d'un template de fonction ?",
+      "reponse": "<code>template &lt;typename T&gt;<br>T max(T a, T b) {<br>&nbsp;&nbsp;return (a > b) ? a : b;<br>}</code><br><br><code>T</code> est le type générique (paramètre de template)"
+    },
+    {
+      "question": "Différence entre <code>typename</code> et <code>class</code> dans les templates ?",
+      "reponse": "<code>template &lt;typename T&gt;</code><br><code>template &lt;class T&gt;</code><br><br><strong>Aucune différence</strong> en pratique.<br><br>Convention moderne : préférer <code>typename</code> (plus clair)"
+    },
+    {
+      "question": "Comment utiliser un template de fonction ?",
+      "reponse": "<strong>Déduction automatique</strong> :<br><code>int x = max(5, 10); // T = int</code><br><br><strong>Spécification explicite</strong> :<br><code>int x = max&lt;int&gt;(5, 10);</code><br><br>Le compilateur déduit généralement tout seul"
+    },
+    {
+      "question": "Que se passe-t-il à la compilation avec les templates ?",
+      "reponse": "<strong>Instanciation</strong> : le compilateur génère une version spécialisée pour chaque type utilisé.<br><br><code>max(5, 10)</code> → génère <code>max&lt;int&gt;</code><br><code>max(5.5, 3.2)</code> → génère <code>max&lt;double&gt;</code>"
+    },
+    {
+      "question": "Pourquoi les templates doivent être dans les .hpp ?",
+      "reponse": "Le compilateur a besoin du <strong>code complet</strong> pour instancier le template.<br><br>Si dans .cpp : code invisible lors de l'instanciation → erreur de link.<br><br>Exception : spécialisation explicite"
+    },
+    {
+      "question": "Syntaxe d'un template de classe ?",
+      "reponse": "<code>template &lt;typename T&gt;<br>class Tableau {<br>private:<br>&nbsp;&nbsp;T* _data;<br>public:<br>&nbsp;&nbsp;T& operator[](int i);<br>};</code><br><br>Utilisation : <code>Tableau&lt;int&gt; tab;</code>"
+    },
+    {
+      "question": "Comment définir une méthode d'un template de classe hors de la classe ?",
+      "reponse": "<code>template &lt;typename T&gt;<br>T& Tableau&lt;T&gt;::operator[](int i) {<br>&nbsp;&nbsp;return _data[i];<br>}</code><br><br>⚠️ Répéter <code>template &lt;typename T&gt;</code> avant chaque méthode"
+    },
+    {
+      "question": "Peut-on avoir plusieurs paramètres de template ?",
+      "reponse": "OUI :<br><br><code>template &lt;typename T, typename U&gt;<br>class Paire {<br>&nbsp;&nbsp;T first;<br>&nbsp;&nbsp;U second;<br>};</code><br><br>Utilisation : <code>Paire&lt;int, string&gt; p;</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'un paramètre de template non-type ?",
+      "reponse": "Valeur constante au lieu d'un type :<br><br><code>template &lt;typename T, int Size&gt;<br>class Array {<br>&nbsp;&nbsp;T _data[Size];<br>};</code><br><br>Utilisation : <code>Array&lt;int, 10&gt; arr;</code>"
+    },
+    {
+      "question": "Quelles valeurs peut-on utiliser comme paramètres non-type ?",
+      "reponse": "- Entiers (int, size_t, etc.)<br>- Pointeurs<br>- Références<br>- Énumérations<br><br>⚠️ Doivent être des <strong>constantes de compilation</strong>"
+    },
+    {
+      "question": "Qu'est-ce que la spécialisation de template ?",
+      "reponse": "Fournir une implémentation <strong>spécifique</strong> pour un type particulier :<br><br><code>template &lt;&gt;<br>class Tableau&lt;bool&gt; {<br>&nbsp;&nbsp;// implémentation spéciale pour bool<br>};</code><br><br>Optimisation ou comportement différent"
+    },
+    {
+      "question": "Différence entre spécialisation totale et partielle ?",
+      "reponse": "<strong>Totale</strong> : tous les paramètres fixés<br><code>template &lt;&gt; class Foo&lt;int&gt; { };</code><br><br><strong>Partielle</strong> : certains paramètres encore génériques<br><code>template &lt;typename T&gt; class Foo&lt;T*&gt; { };</code><br><br>⚠️ Partielle = avancé"
+    },
+    {
+      "question": "Peut-on surcharger des templates de fonctions ?",
+      "reponse": "OUI, comme des fonctions normales :<br><br><code>template &lt;typename T&gt;<br>void print(T val);<br><br>template &lt;typename T&gt;<br>void print(T* ptr); // surcharge pour pointeurs</code>"
+    },
+    {
+      "question": "Ordre de priorité : fonction normale vs template ?",
+      "reponse": "1. <strong>Fonction normale</strong> exacte<br>2. Template spécialisé<br>3. Template générique<br><br>Le compilateur choisit la version la plus spécifique"
+    },
+    {
+      "question": "Qu'est-ce que l'instanciation implicite ?",
+      "reponse": "Génération automatique du code par le compilateur quand le template est <strong>utilisé</strong> :<br><br><code>max(5, 10); // instancie max&lt;int&gt;</code><br><br>Pas de code généré si template non utilisé"
+    },
+    {
+      "question": "Qu'est-ce que l'instanciation explicite ?",
+      "reponse": "Forcer la génération du code pour un type spécifique :<br><br><code>template class Tableau&lt;int&gt;; // instanciation explicite</code><br><br>Rare, utilisé pour optimiser la compilation séparée"
+    },
+    {
+      "question": "Erreurs de compilation avec les templates : quand apparaissent-elles ?",
+      "reponse": "<strong>À l'instanciation</strong>, pas à la définition !<br><br>Le template peut être syntaxiquement correct mais échouer pour certains types :<br><br><code>max(obj1, obj2); // erreur si operator&gt; non défini</code>"
+    },
+    {
+      "question": "Comment déboguer les erreurs de template ?",
+      "reponse": "Les messages d'erreur sont souvent <strong>très longs</strong> et complexes.<br><br>Technique :<br>1. Lire le PREMIER message<br>2. Chercher le type instancié<br>3. Vérifier les contraintes (opérateurs requis)<br><br>Patience requise !"
+    },
+    {
+      "question": "Qu'est-ce que SFINAE ?",
+      "reponse": "<strong>Substitution Failure Is Not An Error</strong><br><br>Si le compilateur ne peut pas instancier un template, il essaie d'autres surcharges au lieu d'échouer.<br><br>Concept avancé pour template metaprogramming"
+    },
+    {
+      "question": "Peut-on avoir des valeurs par défaut pour les paramètres de template ?",
+      "reponse": "OUI :<br><br><code>template &lt;typename T = int, int Size = 10&gt;<br>class Array { };</code><br><br>Utilisation :<br><code>Array&lt;&gt; a; // T=int, Size=10<br>Array&lt;double&gt; b; // T=double, Size=10</code>"
+    },
+    {
+      "question": "Les templates de fonctions supportent-ils les valeurs par défaut ?",
+      "reponse": "OUI depuis C++11, mais limité en C++98.<br><br>En C++98 à 42 : préférer la surcharge de fonctions pour simuler des défauts"
+    },
+    {
+      "question": "Qu'est-ce qu'un template variadic (C++11+) ?",
+      "reponse": "Template acceptant un nombre <strong>variable</strong> de paramètres :<br><br><code>template &lt;typename... Args&gt;</code><br><br>⚠️ Non disponible en C++98 à 42. Information pour culture générale uniquement"
+    },
+    {
+      "question": "Quand utiliser des templates ?",
+      "reponse": "- Conteneurs génériques (vector, list, etc.)<br>- Algorithmes indépendants du type (sort, find)<br>- Éviter duplication de code<br>- Lorsqu'on a besoin de type-safety<br><br>⚠️ Ne pas abuser : complexifie le code"
+    }
+  ]
+}
