@@ -11,10 +11,6 @@
     <nav>
         <ul>
             <li><a href="#home" class="nav-link active" onclick="showPage('home')">Accueil</a></li>
-            <li><a href="#cin" class="nav-link" onclick="showPage('cin')">📥 cin.ignore()</a></li>
-            <li><a href="#vectors" class="nav-link" onclick="showPage('vectors')">Vectors</a></li>
-            <li><a href="#pointers" class="nav-link" onclick="showPage('pointers')">Pointeurs</a></li>
-            <li><a href="#overloads" class="nav-link" onclick="showPage('overloads')">Overloads</a></li>
         </ul>
     </nav>
 
@@ -25,20 +21,29 @@
             <p>Choisis un sujet pour commencer à réviser</p>
             
             <div class="topic-grid">
+                <a class="topic-card" onclick="showPage('namespaces')">
+                    <h3>Namespaces</h3>
+                </a>
+                <a class="topic-card" onclick="showPage('classes')">
+                    <h3>Classes/Objets</h3>
+                </a>
+                <a class="topic-card" onclick="showPage('construct')">
+                    <h3>Constructeurs/Destructeurs</h3>
+                </a>
+                <a class="topic-card" onclick="showPage('const')">
+                    <h3>Const</h3>
+                </a>
+                <a class="topic-card" onclick="showPage('pointers')">
+                    <h3>Pointeurs/References</h3>
+                </a>
+                <a class="topic-card" onclick="showPage('overloads')">
+                    <h3>Surcharges d'opérateurs</h3>
+                </a>
                 <a class="topic-card" onclick="showPage('cin')">
                     <h3>cin.ignore()</h3>
                 </a>
-                
                 <a class="topic-card" onclick="showPage('vectors')">
                     <h3>Vectors</h3>
-                </a>
-                
-                <a class="topic-card" onclick="showPage('pointers')">
-                    <h3>Pointeurs</h3>
-                </a>
-
-                <a class="topic-card" onclick="showPage('overloads')">
-                    <h3>Surcharges d'opérateurs</h3>
                 </a>
             </div>
         </div>
