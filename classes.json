@@ -1,0 +1,84 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce qu'une classe en C++ ?",
+      "reponse": "Un type personnalisé qui encapsule des <strong>données</strong> (attributs) et des <strong>comportements</strong> (méthodes).<br><br>Modèle pour créer des objets"
+    },
+    {
+      "question": "Différence entre classe et objet ?",
+      "reponse": "<strong>Classe</strong> : moule, blueprint (définition)<br><strong>Objet</strong> : instance concrète de la classe<br><br>Analogie : classe = plan de maison, objet = maison construite"
+    },
+    {
+      "question": "Syntaxe de déclaration d'une classe ?",
+      "reponse": "<code>class MaClasse {<br>public:<br>&nbsp;&nbsp;// membres publics<br>private:<br>&nbsp;&nbsp;// membres privés<br>};</code><br><br>⚠️ Point-virgule après l'accolade fermante !"
+    },
+    {
+      "question": "Différence fondamentale entre <code>class</code> et <code>struct</code> ?",
+      "reponse": "<strong>class</strong> : membres <code>private</code> par défaut<br><strong>struct</strong> : membres <code>public</code> par défaut<br><br>Convention : class pour objets complexes, struct pour agrégats de données simples"
+    },
+    {
+      "question": "Qu'est-ce qu'un attribut (membre) de classe ?",
+      "reponse": "Une variable appartenant à la classe, stockant l'état de l'objet.<br><br>Exemple : <code>private: int _nombre;</code><br><br>Convention 42 : préfixe underscore pour membres privés"
+    },
+    {
+      "question": "Qu'est-ce qu'une méthode (fonction membre) ?",
+      "reponse": "Une fonction appartenant à la classe, définissant les comportements de l'objet.<br><br>Peut accéder aux attributs de l'instance via <code>this</code>"
+    },
+    {
+      "question": "Que signifient <code>public</code>, <code>private</code>, <code>protected</code> ?",
+      "reponse": "<strong>public</strong> : accessible partout<br><strong>private</strong> : accessible uniquement dans la classe<br><strong>protected</strong> : accessible dans la classe et ses dérivées<br><br><strong>Principe d'encapsulation</strong>"
+    },
+    {
+      "question": "Pourquoi mettre les attributs en <code>private</code> ?",
+      "reponse": "- Contrôle des modifications (via getters/setters)<br>- Protection des données internes<br>- Flexibilité future (changer implémentation sans casser le code externe)<br><br><strong>Principe fondamental de l'encapsulation</strong>"
+    },
+    {
+      "question": "Qu'est-ce qu'un getter ?",
+      "reponse": "Méthode <code>public</code> qui retourne la valeur d'un attribut <code>private</code>.<br><br>Exemple :<code>int getNombre() const { return _nombre; }</code><br><br>⚠️ Souvent <code>const</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'un setter ?",
+      "reponse": "Méthode <code>public</code> qui modifie un attribut <code>private</code> avec validation possible.<br><br>Exemple :<code>void setNombre(int n) {<br>&nbsp;&nbsp;if (n > 0) _nombre = n;<br>}</code>"
+    },
+    {
+      "question": "Comment créer une instance d'une classe ?",
+      "reponse": "<strong>Sur la stack :</strong> <code>MaClasse obj;</code><br><strong>Sur le heap :</strong> <code>MaClasse* ptr = new MaClasse();</code><br><br>⚠️ À 42, privilégier la stack quand possible"
+    },
+    {
+      "question": "Comment accéder aux membres d'un objet ?",
+      "reponse": "<strong>Objet direct :</strong> <code>obj.methode();</code><br><strong>Pointeur :</strong> <code>ptr->methode();</code><br><br><code>-></code> équivaut à <code>(*ptr).methode()</code>"
+    },
+    {
+      "question": "Qu'est-ce que <code>this</code> en C++ ?",
+      "reponse": "Pointeur constant vers l'objet courant (<code>const</code> car adresse fixe).<br><br>Type : <code>MaClasse* const this</code><br><br>Utilisé pour accéder aux membres de l'instance"
+    },
+    {
+      "question": "Quand utiliser explicitement <code>this</code> ?",
+      "reponse": "- Lever l'ambiguïté entre paramètre et attribut<br>- Retourner l'objet courant : <code>return *this;</code><br>- Passer l'objet à une fonction<br><br>Sinon, <code>this-></code> est implicite"
+    },
+    {
+      "question": "Peut-on modifier <code>this</code> ?",
+      "reponse": "NON ! <code>this</code> est un <strong>pointeur constant</strong>.<br><br>On peut modifier <code>*this</code> (l'objet pointé) mais pas l'adresse de <code>this</code>"
+    },
+    {
+      "question": "Différence entre définition dans la classe et hors de la classe ?",
+      "reponse": "<strong>Dans la classe :</strong> méthode <code>inline</code> (code dans le .hpp)<br><strong>Hors de la classe :</strong> déclaration dans .hpp, implémentation dans .cpp<br><br>À 42 : préférer hors de la classe sauf méthodes triviales"
+    },
+    {
+      "question": "Syntaxe pour implémenter une méthode hors de la classe ?",
+      "reponse": "<code>ReturnType MaClasse::methodeName(params) {<br>&nbsp;&nbsp;// implémentation<br>}</code><br><br>L'opérateur <code>::</code> indique l'appartenance à la classe"
+    },
+    {
+      "question": "Qu'est-ce qu'une méthode <code>inline</code> ?",
+      "reponse": "Méthode dont le code est inséré directement à l'appel (comme une macro).<br><br>- Définie dans le .hpp<br>- Optimisation du compilateur<br>- Utile pour méthodes courtes"
+    },
+    {
+      "question": "Convention de nommage des classes à 42 ?",
+      "reponse": "<strong>PascalCase</strong> : première lettre de chaque mot en majuscule<br><br>Exemples : <code>Fixed</code>, <code>ScavTrap</code>, <code>FragTrap</code>"
+    },
+    {
+      "question": "Convention de nommage des attributs privés à 42 ?",
+      "reponse": "Préfixe underscore + camelCase<br><br>Exemples : <code>_nombre</code>, <code>_firstName</code>, <code>_rawBits</code>"
+    }
+  ]
+}
