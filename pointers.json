@@ -2,11 +2,103 @@
   "cards": [
     {
       "question": "Qu'est-ce qu'un pointeur en C++ ?",
-      "reponse": "Un pointeur est une variable qui stocke l'adresse mémoire d'une autre variable."
+      "reponse": "Variable qui stocke l'<strong>adresse mémoire</strong> d'une autre variable.<br><br>Déclaration : <code>Type* ptr;</code><br><br>Permet manipulation indirecte et allocation dynamique"
     },
     {
-      "question": "Comment déclarer un pointeur ?",
-      "reponse": "<code>int* ptr;</code> ou <code>int *ptr;</code><br><br>Le <code>*</code> indique que c'est un pointeur."
+      "question": "Qu'est-ce qu'une référence en C++ ?",
+      "reponse": "<strong>Alias</strong> (nom alternatif) pour une variable existante.<br><br>Déclaration : <code>Type& ref = var;</code><br><br>⚠️ Doit être initialisée à la déclaration, ne peut pas être changée"
+    },
+    {
+      "question": "Différence fondamentale entre pointeur et référence ?",
+      "reponse": "<strong>Pointeur :</strong><br>- Peut être NULL/nullptr<br>- Peut changer de cible<br>- Syntaxe : <code>*</code> et <code>-></code><br><br><strong>Référence :</strong><br>- Toujours valide (liée à la déclaration)<br>- Ne peut pas changer<br>- Syntaxe transparente"
+    },
+    {
+      "question": "Comment obtenir l'adresse d'une variable ?",
+      "reponse": "Opérateur <code>&</code> (adresse-de) :<br><br><code>int x = 5;<br>int* ptr = &x;</code><br><br><code>ptr</code> contient l'adresse de <code>x</code>"
+    },
+    {
+      "question": "Comment accéder à la valeur via un pointeur ?",
+      "reponse": "Opérateur <code>*</code> (déréférencement) :<br><br><code>int* ptr = &x;<br>int valeur = *ptr; // lit la valeur<br>*ptr = 10; // modifie la valeur</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'un pointeur NULL / nullptr ?",
+      "reponse": "Pointeur qui ne pointe vers rien.<br><br><strong>C++98 :</strong> <code>NULL</code> (macro valant 0)<br><strong>C++11+ :</strong> <code>nullptr</code> (type spécifique)<br><br>À 42 (C++98) : utiliser <code>NULL</code> ou <code>0</code>"
+    },
+    {
+      "question": "Pourquoi toujours vérifier <code>if (ptr != NULL)</code> ?",
+      "reponse": "Pour éviter le <strong>segmentation fault</strong> (accès mémoire invalide).<br><br>Déréférencer un pointeur NULL = crash du programme"
+    },
+    {
+      "question": "Comment créer un objet sur le heap ?",
+      "reponse": "<code>Type* ptr = new Type();</code><br><br>- Allocation dynamique<br>- Vit jusqu'au <code>delete</code><br>- <strong>OBLIGATOIRE</strong> : <code>delete ptr;</code> pour libérer"
+    },
+    {
+      "question": "Différence entre stack et heap ?",
+      "reponse": "<strong>Stack :</strong><br>- Automatique, rapide<br>- Durée de vie limitée au scope<br>- <code>Type obj;</code><br><br><strong>Heap :</strong><br>- Manuel avec new/delete<br>- Durée de vie contrôlée<br>- <code>Type* ptr = new Type();</code>"
+    },
+    {
+      "question": "Que fait <code>delete ptr;</code> ?",
+      "reponse": "1. Appelle le destructeur de l'objet pointé<br>2. Libère la mémoire<br><br>⚠️ <code>ptr</code> devient dangling pointer (pointer toujours mais vers mémoire libérée)"
+    },
+    {
+      "question": "Qu'est-ce qu'un dangling pointer ?",
+      "reponse": "Pointeur qui pointe vers une mémoire <strong>déjà libérée</strong>.<br><br>Causes :<br>- Après <code>delete</code><br>- Objet stack détruit<br><br>Solution : mettre à <code>NULL</code> après <code>delete</code>"
+    },
+    {
+      "question": "Qu'est-ce qu'un double free ?",
+      "reponse": "Appeler <code>delete</code> deux fois sur le même pointeur.<br><br>⚠️ <strong>Comportement indéfini</strong> (corruption mémoire, crash)<br><br>Solution : <code>delete ptr; ptr = NULL;</code>"
+    },
+    {
+      "question": "Différence entre <code>delete</code> et <code>delete[]</code> ?",
+      "reponse": "<code>delete ptr;</code> : pour un seul objet<br><code>delete[] arr;</code> : pour un tableau<br><br>⚠️ Utiliser le bon selon <code>new</code> ou <code>new[]</code>"
+    },
+    {
+      "question": "Comment créer une référence ?",
+      "reponse": "<code>int x = 5;<br>int& ref = x;</code><br><br>- <code>ref</code> est un alias de <code>x</code><br>- Modifier <code>ref</code> modifie <code>x</code><br>- ⚠️ Doit être initialisée immédiatement"
+    },
+    {
+      "question": "Peut-on faire une référence vers NULL ?",
+      "reponse": "NON ! Les références doivent <strong>toujours</strong> référencer un objet valide.<br><br>Pas de \"référence nulle\" en C++ (contrairement aux pointeurs)"
+    },
+    {
+      "question": "Peut-on changer la cible d'une référence ?",
+      "reponse": "NON ! Une fois initialisée, la référence est <strong>liée à vie</strong> à sa cible.<br><br><code>ref = autreVar;</code> copie la valeur, ne change pas la liaison"
+    },
+    {
+      "question": "Quand utiliser un pointeur vs une référence ?",
+      "reponse": "<strong>Référence :</strong> paramètres, alias permanent, jamais NULL<br><strong>Pointeur :</strong> allocation dynamique, peut être NULL, réassignation nécessaire<br><br>Règle : préférer référence sauf besoin spécifique"
+    },
+    {
+      "question": "Syntaxe de passage par référence ?",
+      "reponse": "<code>void modifier(int& x) {<br>&nbsp;&nbsp;x = 10; // modifie l'original<br>}</code><br><br>Appel : <code>modifier(maVar);</code> (syntaxe transparente)"
+    },
+    {
+      "question": "Pourquoi passer par référence plutôt que par valeur ?",
+      "reponse": "- <strong>Performance</strong> : pas de copie (crucial pour gros objets)<br>- <strong>Modification</strong> : permet de modifier l'argument original<br><br>Combiné avec <code>const&</code> = optimal"
+    },
+    {
+      "question": "Différence entre <code>Type&</code> et <code>const Type&</code> en paramètre ?",
+      "reponse": "<code>Type&</code> : peut modifier l'argument<br><code>const Type&</code> : lecture seule, ne peut pas modifier<br><br><strong>Bonne pratique :</strong> toujours <code>const&</code> sauf si modification nécessaire"
+    },
+    {
+      "question": "Peut-on retourner une référence depuis une fonction ?",
+      "reponse": "OUI mais <strong>ATTENTION</strong> :<br><br>✅ OK : référence vers objet persistant (membre, global)<br>❌ DANGER : référence vers variable locale<br><br>Variable locale détruite → dangling reference"
+    },
+    {
+      "question": "Pourquoi ce code est dangereux ?<br><code>int& foo() {<br>&nbsp;&nbsp;int x = 5;<br>&nbsp;&nbsp;return x;<br>}</code>",
+      "reponse": "<code>x</code> est détruit en sortant de <code>foo()</code>.<br><br>Retourner une référence vers <code>x</code> = <strong>dangling reference</strong><br><br>⚠️ Comportement indéfini, probable segfault"
+    },
+    {
+      "question": "Qu'est-ce que l'arithmétique de pointeurs ?",
+      "reponse": "Opérations sur pointeurs pour naviguer en mémoire :<br><br><code>ptr++</code> : pointe vers l'élément suivant<br><code>ptr + n</code> : avance de n éléments<br><br>⚠️ À utiliser avec précaution (buffer overflow)"
+    },
+    {
+      "question": "Différence entre <code>ptr++</code> et <code>++ptr</code> ?",
+      "reponse": "<code>ptr++</code> : post-incrémentation (retourne ancienne valeur puis incrémente)<br><code>++ptr</code> : pré-incrémentation (incrémente puis retourne nouvelle valeur)<br><br>Pour pointeurs : même effet final, <code>++ptr</code> légèrement plus efficace"
+    },
+    {
+      "question": "Règle d'or de gestion mémoire à 42 ?",
+      "reponse": "\"Qui alloue, désalloue\"<br><br>- Chaque <code>new</code> → un <code>delete</code><br>- Chaque <code>new[]</code> → un <code>delete[]</code><br>- Vérifier avec valgrind (aucune fuite !)"
     }
   ]
 }
