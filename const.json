@@ -1,0 +1,69 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce que la <strong>const-correctness</strong> ?",
+      "reponse": "Discipline de programmation consistant à utiliser <code>const</code> systématiquement pour indiquer ce qui ne doit pas être modifié.<br><br>Améliore la sûreté et la lisibilité du code"
+    },
+    {
+      "question": "Que signifie <code>const int x = 5;</code> ?",
+      "reponse": "<code>x</code> est une constante : sa valeur ne peut pas être modifiée après initialisation.<br><br>⚠️ Doit être initialisée à la déclaration"
+    },
+    {
+      "question": "Différence entre <code>const int* ptr</code> et <code>int* const ptr</code> ?",
+      "reponse": "<code>const int* ptr</code> : pointeur vers constante (peut changer d'adresse, mais pas modifier la valeur pointée)<br><code>int* const ptr</code> : pointeur constant (ne peut pas changer d'adresse, mais peut modifier la valeur)"
+    },
+    {
+      "question": "Que signifie <code>const int* const ptr</code> ?",
+      "reponse": "Pointeur constant vers constante :<br>- Ne peut PAS changer d'adresse<br>- Ne peut PAS modifier la valeur pointée<br><br><strong>Doublement immutable</strong>"
+    },
+    {
+      "question": "Astuce mnémotechnique pour lire <code>const</code> avec pointeurs ?",
+      "reponse": "Lire de <strong>droite à gauche</strong> :<br><code>const int* ptr</code> → ptr est un pointeur vers int constant<br><code>int* const ptr</code> → ptr est un pointeur constant vers int"
+    },
+    {
+      "question": "Qu'est-ce qu'une méthode <code>const</code> ?",
+      "reponse": "Méthode qui promet de ne <strong>pas modifier l'état de l'objet</strong>.<br><br>Syntaxe : <code>int getValue() const;</code><br><br>Le <code>const</code> après les paramètres est crucial"
+    },
+    {
+      "question": "Pourquoi marquer les getters en <code>const</code> ?",
+      "reponse": "- Indique que la méthode est <strong>lecture seule</strong><br>- Permet d'appeler le getter sur des objets <code>const</code><br>- Contrat de non-modification<br><br><strong>Bonne pratique obligatoire</strong>"
+    },
+    {
+      "question": "Que se passe-t-il si on oublie <code>const</code> sur un getter ?",
+      "reponse": "On ne peut pas appeler ce getter sur un objet <code>const</code> :<br><br><code>const MaClasse obj;<br>obj.getValue(); // ERREUR si getValue() n'est pas const</code>"
+    },
+    {
+      "question": "Peut-on modifier un attribut dans une méthode <code>const</code> ?",
+      "reponse": "NON (sauf si l'attribut est <code>mutable</code>).<br><br>Erreur de compilation : <em>\"cannot assign to non-static data member within const member function\"</em>"
+    },
+    {
+      "question": "Qu'est-ce que <code>mutable</code> ?",
+      "reponse": "Mot-clé permettant de modifier un attribut même dans une méthode <code>const</code>.<br><br>Exemple : <code>mutable int _cache;</code><br><br>Utilisé pour caches, compteurs, locks"
+    },
+    {
+      "question": "Différence entre paramètre <code>const Type&</code> et <code>Type</code> ?",
+      "reponse": "<code>const Type&</code> :<br>- Passage par référence (pas de copie)<br>- Protection contre modification<br>- Efficace pour objets volumineux<br><br><code>Type</code> : copie complète"
+    },
+    {
+      "question": "Quand passer par <code>const Type&</code> ?",
+      "reponse": "<strong>Toujours</strong> pour les types complexes (string, vector, classes personnalisées) en lecture seule.<br><br>Exception : types primitifs (<code>int</code>, <code>char</code>, <code>double</code>) → copie acceptable"
+    },
+    {
+      "question": "Que retourne une méthode <code>const</code> qui doit retourner un membre ?",
+      "reponse": "- <code>const Type&</code> : évite copie, empêche modification<br>- <code>Type</code> : retourne une copie (safe mais moins efficace)<br><br>Choix selon le besoin de protection"
+    },
+    {
+      "question": "Qu'est-ce qu'un objet <code>const</code> ?",
+      "reponse": "<code>const MaClasse obj;</code><br><br>- Ne peut appeler QUE des méthodes <code>const</code><br>- Ses attributs ne peuvent être modifiés<br>- Doit être initialisé à la construction"
+    },
+    {
+      "question": "Peut-on surcharger une méthode sur <code>const</code> ?",
+      "reponse": "OUI ! Deux versions possibles :<br><br><code>Type& get(); // version non-const<br>const Type& get() const; // version const</code><br><br>Appelée selon la constance de l'objet"
+    },
+    {
+      "question": "Pourquoi retourner <code>const Type&</code> d'un getter ?",
+      "reponse": "- Évite la copie (performance)<br>- Empêche modification externe : <code>obj.getName() = \"hack\";</code> impossible<br><br>Protection + efficacité"
+    },
+    {
+      "question": "Que signifie <code>const</code> après une déclaration de fonction ?",
+      "reponse": "Qua
