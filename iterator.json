@@ -1,0 +1,104 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce qu'un itérateur en C++ ?",
+      "reponse": "Objet permettant de <strong>parcourir les éléments</strong> d'un conteneur de manière uniforme, similaire à un pointeur généralisé.<br><br>Découple les algorithmes des conteneurs"
+    },
+    {
+      "question": "Comment obtenir des itérateurs d'un conteneur ?",
+      "reponse": "<code>container.begin()</code> : itérateur vers le premier élément<br><code>container.end()</code> : itérateur <strong>après</strong> le dernier élément<br><br>⚠️ <code>end()</code> pointe après, pas sur le dernier !"
+    },
+    {
+      "question": "Pattern typique de boucle avec itérateurs ?",
+      "reponse": "<code>for (std::vector&lt;int&gt;::iterator it = v.begin();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it != v.end(); ++it) {<br>&nbsp;&nbsp;std::cout << *it << std::endl;<br>}</code><br><br>Déréférencement avec <code>*it</code>"
+    },
+    {
+      "question": "Pourquoi utiliser <code>++it</code> plutôt que <code>it++</code> ?",
+      "reponse": "<strong>++it</strong> (pré-incrémentation) : plus efficace, pas de copie temporaire<br><strong>it++</strong> (post-incrémentation) : doit créer une copie avant incrément<br><br>Pour les itérateurs complexes : différence notable"
+    },
+    {
+      "question": "Comment déclarer un itérateur ?",
+      "reponse": "<code>std::vector&lt;int&gt;::iterator it;</code><br><br>Type complet = conteneur + <code>::iterator</code><br><br>⚠️ Verbeux en C++98. C++11 a <code>auto</code>"
+    },
+    {
+      "question": "Différence entre <code>iterator</code> et <code>const_iterator</code> ?",
+      "reponse": "<strong>iterator</strong> : lecture et écriture<br><code>*it = 10; // OK</code><br><br><strong>const_iterator</strong> : lecture seule<br><code>*it = 10; // ERREUR</code><br><br>Utilisé avec conteneurs <code>const</code>"
+    },
+    {
+      "question": "Comment obtenir un <code>const_iterator</code> ?",
+      "reponse": "Sur un conteneur const :<br><code>const std::vector&lt;int&gt; v;<br>std::vector&lt;int&gt;::const_iterator it = v.begin();</code><br><br>Ou explicitement :<br><code>std::vector&lt;int&gt;::const_iterator it = v.begin();</code>"
+    },
+    {
+      "question": "Quelles sont les 5 catégories d'itérateurs ?",
+      "reponse": "1. <strong>Input</strong> : lecture seule, une passe<br>2. <strong>Output</strong> : écriture seule, une passe<br>3. <strong>Forward</strong> : lecture/écriture, multi-passes<br>4. <strong>Bidirectional</strong> : forward + décrémentation<br>5. <strong>Random Access</strong> : + arithmétique (it + n)"
+    },
+    {
+      "question": "Quel type d'itérateur a <code>std::vector</code> ?",
+      "reponse": "<strong>Random Access</strong> : le plus puissant<br><br>Supporte :<br>- <code>it + n</code>, <code>it - n</code><br>- <code>it[n]</code><br>- Comparaisons <code>&lt;</code>, <code>&gt;</code><br>- Arithmétique complète"
+    },
+    {
+      "question": "Quel type d'itérateur a <code>std::list</code> ?",
+      "reponse": "<strong>Bidirectional</strong> :<br><br>Supporte :<br>- <code>++it</code>, <code>--it</code><br>- Pas d'arithmétique (<code>it + 5</code> impossible)<br><br>Raison : liste chaînée, pas d'accès direct"
+    },
+    {
+      "question": "Comment parcourir un conteneur à l'envers ?",
+      "reponse": "Avec <strong>reverse_iterator</strong> :<br><br><code>for (std::vector&lt;int&gt;::reverse_iterator it = v.rbegin();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it != v.rend(); ++it) {<br>&nbsp;&nbsp;std::cout << *it;<br>}</code><br><br><code>rbegin()</code> = dernier, <code>rend()</code> = avant le premier"
+    },
+    {
+      "question": "Opérations communes à tous les itérateurs ?",
+      "reponse": "- <code>*it</code> : déréférencement<br>- <code>++it</code> : avancer<br>- <code>it1 == it2</code>, <code>it1 != it2</code> : comparaison<br><br>Autres opérations dépendent de la catégorie"
+    },
+    {
+      "question": "Comment accéder aux membres via un itérateur ?",
+      "reponse": "<code>it-&gt;membre</code> équivaut à <code>(*it).membre</code><br><br>Exemple :<br><code>std::vector&lt;std::string&gt; v;<br>std::vector&lt;std::string&gt;::iterator it = v.begin();<br>int len = it-&gt;length();</code>"
+    },
+    {
+      "question": "Quand un itérateur devient-il invalide ?",
+      "reponse": "Dépend du conteneur et de l'opération :<br><br><strong>vector</strong> : réallocation (push_back si capacity pleine)<br><strong>list</strong> : suppression de l'élément pointé<br><strong>map</strong> : suppression de l'élément pointé<br><br>⚠️ Utiliser un itérateur invalide = comportement indéfini"
+    },
+    {
+      "question": "Comment supprimer un élément pendant une boucle d'itération ?",
+      "reponse": "<code>for (it = v.begin(); it != v.end(); ) {<br>&nbsp;&nbsp;if (*it == valeur)<br>&nbsp;&nbsp;&nbsp;&nbsp;it = v.erase(it); // erase retourne nouvel itérateur<br>&nbsp;&nbsp;else<br>&nbsp;&nbsp;&nbsp;&nbsp;++it;<br>}</code><br><br>⚠️ Ne pas incrémenter après erase"
+    },
+    {
+      "question": "Différence entre <code>erase(it)</code> sur vector vs list ?",
+      "reponse": "<strong>vector</strong> : tous les itérateurs après <code>it</code> invalidés<br><strong>list</strong> : seul <code>it</code> est invalidé<br><br>Raison : vector décale les éléments, list ajuste seulement les liens"
+    },
+    {
+      "question": "Comment obtenir l'index d'un itérateur dans un vector ?",
+      "reponse": "<code>size_t index = it - v.begin();</code><br><br>⚠️ Fonctionne SEULEMENT avec itérateurs Random Access<br><br>Pour list : parcourir et compter (O(n))"
+    },
+    {
+      "question": "Comment avancer un itérateur de n positions ?",
+      "reponse": "<strong>Random Access</strong> : <code>it += n;</code> ou <code>it = it + n;</code><br><br><strong>Autres</strong> : utiliser <code>std::advance()</code> :<br><code>#include &lt;iterator&gt;<br>std::advance(it, n); // modifie it</code>"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::distance()</code> ?",
+      "reponse": "Calcule le nombre d'incrémentations entre deux itérateurs :<br><br><code>#include &lt;iterator&gt;<br>int dist = std::distance(it1, it2);</code><br><br>O(1) pour Random Access, O(n) pour autres"
+    },
+    {
+      "question": "Pourquoi ne pas modifier un conteneur pendant son parcours ?",
+      "reponse": "Risque d'<strong>invalidation des itérateurs</strong> :<br><br>- Réallocation (vector)<br>- Réorganisation interne (map, set)<br><br>→ Itérateurs pointent vers mémoire invalide<br>→ Crash ou comportement indéfini"
+    },
+    {
+      "question": "Comment parcourir un <code>map</code> avec itérateurs ?",
+      "reponse": "<code>std::map&lt;std::string, int&gt; m;<br><br>for (std::map&lt;std::string, int&gt;::iterator it = m.begin();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it != m.end(); ++it) {<br>&nbsp;&nbsp;std::cout << it-&gt;first; // clé<br>&nbsp;&nbsp;std::cout << it-&gt;second; // valeur<br>}</code>"
+    },
+    {
+      "question": "Différence entre <code>->first</code> et <code>->second</code> pour un map ?",
+      "reponse": "Un itérateur de map pointe vers une <code>std::pair</code> :<br><br><strong>first</strong> : la clé (const)<br><strong>second</strong> : la valeur (modifiable)<br><br><code>it-&gt;second = 42; // OK<br>it-&gt;first = \"x\"; // ERREUR (const)</code>"
+    },
+    {
+      "question": "Peut-on comparer des itérateurs de conteneurs différents ?",
+      "reponse": "NON ! <strong>Comportement indéfini</strong> :<br><br><code>std::vector&lt;int&gt; v1, v2;<br>v1.begin() == v2.begin(); // ⚠️ Dangereux</code><br><br>Comparaison valide seulement dans le même conteneur"
+    },
+    {
+      "question": "Pattern pour parcourir et modifier un vector ?",
+      "reponse": "<code>for (std::vector&lt;int&gt;::iterator it = v.begin();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it != v.end(); ++it) {<br>&nbsp;&nbsp;*it *= 2; // modification OK<br>}</code><br><br>Avec <code>iterator</code> (pas <code>const_iterator</code>)"
+    },
+    {
+      "question": "À quoi sert un <code>insert_iterator</code> ?",
+      "reponse": "Itérateur spécial qui <strong>insère</strong> au lieu d'écraser :<br><br><code>#include &lt;iterator&gt;<br>std::back_insert_iterator&lt;std::vector&lt;int&gt;&gt; bi(v);<br>*bi = 10; // équivaut à v.push_back(10)</code><br><br>Utilisé avec algorithmes"
+    }
+  ]
+}
