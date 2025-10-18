@@ -1,0 +1,64 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce qu'un namespace en C++ ?",
+      "reponse": "Un espace de noms qui permet de regrouper des identifiants (fonctions, classes, variables) pour éviter les conflits de noms.<br><br>Exemple : <code>std::cout</code> (cout dans le namespace std)"
+    },
+    {
+      "question": "Comment déclarer un namespace ?",
+      "reponse": "<code>namespace MonNom {<br>&nbsp;&nbsp;// déclarations<br>}</code><br><br>Tout ce qui est à l'intérieur appartient à ce namespace."
+    },
+    {
+      "question": "Comment accéder à un élément d'un namespace ?",
+      "reponse": "Avec l'opérateur de résolution de portée <code>::</code><br><br>Exemple : <code>std::string</code>, <code>MonNamespace::maFonction()</code>"
+    },
+    {
+      "question": "Pourquoi <code>using namespace std;</code> est interdit à 42 ?",
+      "reponse": "Car cela pollue l'espace de noms global et peut causer des conflits de noms (ex: confusion entre <code>std::distance</code> et une fonction <code>distance()</code> personnalisée).<br><br><strong>Règle 42 :</strong> Toujours préfixer <code>std::</code>"
+    },
+    {
+      "question": "Quelle est la différence entre <code>::variable</code> et <code>variable</code> ?",
+      "reponse": "<code>::variable</code> : accès à la variable dans le namespace global<br><code>variable</code> : accès à la variable dans le scope local<br><br>Exemple : <code>::x</code> vs <code>x</code> si un <code>x</code> local existe"
+    },
+    {
+      "question": "Qu'est-ce qu'un header guard et pourquoi est-il crucial ?",
+      "reponse": "<code>#ifndef MON_HEADER_HPP<br># define MON_HEADER_HPP<br>// contenu<br>#endif</code><br><br>Empêche l'inclusion multiple du même fichier (erreur de redéfinition)"
+    },
+    {
+      "question": "Convention de nommage des header guards à 42 ?",
+      "reponse": "Nom du fichier en MAJUSCULES avec underscores<br><br>Exemple : <code>Fixed.hpp</code> → <code>#ifndef FIXED_HPP</code>"
+    },
+    {
+      "question": "Différence entre <code>.hpp</code> et <code>.cpp</code> ?",
+      "reponse": "<strong>.hpp</strong> : déclarations (prototypes, définitions de classes)<br><strong>.cpp</strong> : implémentations (corps des fonctions)<br><br>Le .hpp est inclus, le .cpp est compilé"
+    },
+    {
+      "question": "Que mettre dans un fichier .hpp ?",
+      "reponse": "- Déclarations de classes<br>- Prototypes de fonctions<br>- Définitions inline<br>- Header guards<br><br><strong>PAS</strong> d'implémentations complètes (sauf inline/template)"
+    },
+    {
+      "question": "Que mettre dans un fichier .cpp ?",
+      "reponse": "- Implémentations des méthodes<br>- Définitions de fonctions<br>- <code>#include</code> du .hpp correspondant<br><br>Une seule règle : <strong>implémentation uniquement</strong>"
+    },
+    {
+      "question": "Pourquoi séparer déclaration et implémentation ?",
+      "reponse": "- Compilation séparée (plus rapide)<br>- Réutilisabilité (partage du .hpp)<br>- Encapsulation (cache les détails)<br>- Standard industriel"
+    },
+    {
+      "question": "Comment compiler plusieurs fichiers C++ ?",
+      "reponse": "<code>c++ -Wall -Wextra -Werror -std=c++98 main.cpp Classe.cpp -o programme</code><br><br>Ou via Makefile avec règles de compilation séparée"
+    },
+    {
+      "question": "Qu'est-ce que la compilation séparée ?",
+      "reponse": "Chaque .cpp est compilé en .o (fichier objet) indépendamment, puis tous les .o sont liés ensemble.<br><br>Avantage : ne recompiler que ce qui a changé"
+    },
+    {
+      "question": "À quoi sert le flag <code>-std=c++98</code> à 42 ?",
+      "reponse": "Impose la norme C++98, excluant les fonctionnalités modernes (C++11/14/17).<br><br><strong>Obligatoire à 42</strong> pour la compatibilité et l'apprentissage des bases"
+    },
+    {
+      "question": "Que signifient les flags <code>-Wall -Wextra -Werror</code> ?",
+      "reponse": "<strong>-Wall</strong> : active les warnings courants<br><strong>-Wextra</strong> : warnings supplémentaires<br><strong>-Werror</strong> : traite les warnings comme des erreurs<br><br><strong>Obligatoires à 42</strong>"
+    }
+  ]
+}
