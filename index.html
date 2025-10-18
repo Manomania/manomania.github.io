@@ -14,6 +14,7 @@
             <li><a href="#cin" class="nav-link" onclick="showPage('cin')">📥 cin.ignore()</a></li>
             <li><a href="#vectors" class="nav-link" onclick="showPage('vectors')">📊 Vectors</a></li>
             <li><a href="#pointers" class="nav-link" onclick="showPage('pointers')">👉 Pointeurs</a></li>
+            <li><a href="#overloads" class="nav-link" onclick="showPage('overloads')">👉 Pointeurs</a></li>
         </ul>
     </nav>
 
@@ -25,18 +26,19 @@
             
             <div class="topic-grid">
                 <a class="topic-card" onclick="showPage('cin')">
-                    <h3>📥 cin.ignore()</h3>
-                    <p>9 cartes · Gestion des flux d'entrée</p>
+                    <h3>cin.ignore()</h3>
                 </a>
                 
                 <a class="topic-card" onclick="showPage('vectors')">
-                    <h3>📊 Vectors</h3>
-                    <p>6 cartes · Conteneurs dynamiques</p>
+                    <h3>Vectors</h3>
                 </a>
                 
                 <a class="topic-card" onclick="showPage('pointers')">
-                    <h3>👉 Pointeurs</h3>
-                    <p>Bientôt disponible</p>
+                    <h3>Pointeurs</h3>
+                </a>
+
+                <a class="topic-card" onclick="showPage('overloads')">
+                    <h3>Surcharges d'opérateurs</h3>
                 </a>
             </div>
         </div>
@@ -45,7 +47,7 @@
     <!-- Page cin.ignore() -->
     <div id="cin" class="page">
         <div class="flashcards-container">
-            <h1>📥 Flashcards: cin.ignore()</h1>
+            <h1>Flashcards: cin.ignore()</h1>
             <div class="cards-grid" id="cinCards"></div>
         </div>
     </div>
@@ -53,7 +55,7 @@
     <!-- Page Vectors -->
     <div id="vectors" class="page">
         <div class="flashcards-container">
-            <h1>📊 Flashcards: Vectors</h1>
+            <h1>Flashcards: Vectors</h1>
             <div class="cards-grid" id="vectorsCards"></div>
         </div>
     </div>
@@ -61,13 +63,20 @@
     <!-- Page Pointeurs -->
     <div id="pointers" class="page">
         <div class="flashcards-container">
-            <h1>👉 Flashcards: Pointeurs</h1>
+            <h1>Flashcards: Pointeurs</h1>
             <div class="cards-grid">
                 <div style="color: white; text-align: center; grid-column: 1/-1; padding: 50px;">
                     <h2>Contenu à venir...</h2>
                     <p>Les flashcards sur les pointeurs seront bientôt disponibles !</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="cin" class="page">
+        <div class="flashcards-container">
+            <h1>📥 Flashcards: Surcharges d'opérateurs</h1>
+            <div class="cards-grid" id="SurchargesCards"></div>
         </div>
     </div>
 
