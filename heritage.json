@@ -1,0 +1,104 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce que l'héritage en C++ ?",
+      "reponse": "Mécanisme permettant à une classe (dérivée/enfant) d'hériter des attributs et méthodes d'une autre classe (de base/parente).<br><br>Permet la <strong>réutilisation de code</strong> et la <strong>spécialisation</strong>"
+    },
+    {
+      "question": "Syntaxe de base de l'héritage ?",
+      "reponse": "<code>class Enfant : public Parent {<br>&nbsp;&nbsp;// membres spécifiques<br>};</code><br><br>Enfant hérite de tout ce qui est dans Parent"
+    },
+    {
+      "question": "Que signifie l'héritage <code>public</code> ?",
+      "reponse": "Les membres <code>public</code> du parent restent <code>public</code> dans l'enfant.<br>Les membres <code>protected</code> du parent restent <code>protected</code>.<br><br><strong>Type le plus courant</strong> : relation \"est-un\""
+    },
+    {
+      "question": "Quels membres sont hérités ?",
+      "reponse": "✅ Attributs <code>public</code> et <code>protected</code><br>✅ Méthodes <code>public</code> et <code>protected</code><br><br>❌ Constructeurs<br>❌ Destructeur<br>❌ Opérateur d'affectation<br>❌ Membres <code>private</code> (mais existent dans l'objet !)"
+    },
+    {
+      "question": "Qu'est-ce que <code>protected</code> ?",
+      "reponse": "Niveau de visibilité entre <code>public</code> et <code>private</code> :<br><br>- Accessible dans la classe et ses <strong>dérivées</strong><br>- Inaccessible de l'extérieur<br><br>Utilisé pour les attributs à partager avec les enfants"
+    },
+    {
+      "question": "Comment accéder aux membres <code>private</code> du parent depuis l'enfant ?",
+      "reponse": "Impossible directement !<br><br>Solutions :<br>1. Les déclarer <code>protected</code><br>2. Utiliser les getters/setters <code>public</code> du parent<br><br>Le <code>private</code> reste privé même pour les enfants"
+    },
+    {
+      "question": "Ordre d'appel des constructeurs avec héritage ?",
+      "reponse": "De la base vers le dérivé :<br><br>1. Constructeur <strong>parent</strong><br>2. Constructeurs des <strong>attributs membres</strong> de l'enfant<br>3. Corps du constructeur <strong>enfant</strong><br><br>Logique : construire les fondations d'abord"
+    },
+    {
+      "question": "Ordre d'appel des destructeurs avec héritage ?",
+      "reponse": "<strong>Inverse des constructeurs</strong> :<br><br>1. Destructeur <strong>enfant</strong><br>2. Destructeurs des <strong>attributs membres</strong><br>3. Destructeur <strong>parent</strong><br><br>Logique : détruire le toit avant les fondations"
+    },
+    {
+      "question": "Comment appeler explicitement le constructeur du parent ?",
+      "reponse": "Via la liste d'initialisation :<br><br><code>Enfant::Enfant() : Parent(args) {<br>&nbsp;&nbsp;// corps enfant<br>}</code><br><br>Si omis : appel automatique du constructeur par défaut du parent"
+    },
+    {
+      "question": "Que se passe-t-il si le parent n'a pas de constructeur par défaut ?",
+      "reponse": "<strong>Erreur de compilation</strong> si l'enfant ne l'appelle pas explicitement !<br><br>Solution obligatoire :<br><code>Enfant::Enfant(args) : Parent(args) { }</code>"
+    },
+    {
+      "question": "Qu'est-ce que la redéfinition (override) d'une méthode ?",
+      "reponse": "L'enfant crée sa propre version d'une méthode du parent avec <strong>même signature</strong>.<br><br>Exemple :<br><code>// Parent<br>void foo();<br>// Enfant<br>void foo(); // redéfinition</code>"
+    },
+    {
+      "question": "Comment appeler la version parent d'une méthode redéfinie ?",
+      "reponse": "Opérateur de résolution de portée <code>::</code> :<br><br><code>void Enfant::foo() {<br>&nbsp;&nbsp;Parent::foo(); // appel version parent<br>&nbsp;&nbsp;// code spécifique enfant<br>}</code>"
+    },
+    {
+      "question": "Différence entre redéfinition et surcharge ?",
+      "reponse": "<strong>Redéfinition</strong> : même signature, dans classe dérivée (override)<br><strong>Surcharge</strong> : signatures différentes, même classe (overload)<br><br>Redéfinition masque la version parent"
+    },
+    {
+      "question": "Qu'est-ce que le <em>name hiding</em> ?",
+      "reponse": "Si l'enfant redéfinit UNE méthode, TOUTES les surcharges du parent avec ce nom sont cachées.<br><br>Solution : redéfinir toutes ou utiliser <code>using Parent::methode;</code>"
+    },
+    {
+      "question": "À quoi sert <code>using Parent::methode;</code> dans l'enfant ?",
+      "reponse": "Rend visible la méthode du parent malgré le name hiding.<br><br>Permet de redéfinir une surcharge sans masquer les autres :<br><br><code>using Parent::foo;<br>void foo(int); // nouvelle surcharge</code>"
+    },
+    {
+      "question": "Qu'est-ce que l'héritage multiple ?",
+      "reponse": "Classe héritant de plusieurs parents :<br><br><code>class Enfant : public Parent1, public Parent2 { };</code><br><br>⚠️ Complexe, risque de conflits (problème du diamant)"
+    },
+    {
+      "question": "Qu'est-ce que le problème du diamant ?",
+      "reponse": "Avec héritage multiple en diamant :<br><br><code>A → B, A → C, B+C → D</code><br><br>D a deux copies de A !<br><br>Solution C++98 : éviter, ou héritage virtuel (avancé)"
+    },
+    {
+      "question": "Règle à 42 sur l'héritage multiple ?",
+      "reponse": "Généralement <strong>évité</strong> dans les projets C++.<br><br>Préférer :<br>- Héritage simple<br>- Composition (has-a vs is-a)<br>- Interfaces (classes abstraites pures)"
+    },
+    {
+      "question": "Qu'est-ce que la relation \"est-un\" (is-a) ?",
+      "reponse": "Principe de l'héritage : l'enfant <strong>EST UN</strong> parent.<br><br>Exemples valides :<br>- Chien est-un Animal<br>- Carré est-un Rectangle<br><br>Si pas \"est-un\" → utiliser composition, pas héritage"
+    },
+    {
+      "question": "Qu'est-ce que la relation \"a-un\" (has-a) ?",
+      "reponse": "Principe de composition : une classe <strong>CONTIENT</strong> une autre comme attribut.<br><br>Exemple : Voiture <strong>a un</strong> Moteur<br><br><code>class Voiture {<br>&nbsp;&nbsp;Moteur _moteur; // composition<br>};</code>"
+    },
+    {
+      "question": "Peut-on convertir un pointeur enfant en pointeur parent ?",
+      "reponse": "OUI, c'est une conversion <strong>implicite</strong> et sûre (upcast) :<br><br><code>Enfant* e = new Enfant();<br>Parent* p = e; // OK automatiquement</code><br><br>Principe du polymorphisme"
+    },
+    {
+      "question": "Peut-on convertir un pointeur parent en pointeur enfant ?",
+      "reponse": "Pas implicitement ! Nécessite un cast <strong>explicite</strong> (downcast) :<br><br><code>Parent* p = new Enfant();<br>Enfant* e = dynamic_cast<Enfant*>(p);</code><br><br>⚠️ Dangereux si le pointeur ne pointe pas vraiment vers un Enfant"
+    },
+    {
+      "question": "Qu'est-ce que le slicing ?",
+      "reponse": "Perte d'information lors de la copie d'un objet dérivé dans un objet de base :<br><br><code>Enfant e;<br>Parent p = e; // slicing !</code><br><br>Seule la partie Parent est copiée, la partie Enfant est \"tranchée\""
+    },
+    {
+      "question": "Comment éviter le slicing ?",
+      "reponse": "Utiliser des <strong>pointeurs ou références</strong> :<br><br><code>Enfant e;<br>Parent& p = e; // OK, pas de slicing<br>Parent* ptr = &e; // OK</code><br><br>Jamais d'affectation directe pour le polymorphisme"
+    },
+    {
+      "question": "Pourquoi afficher l'héritage dans les messages de debug ?",
+      "reponse": "Pour tracer l'ordre des constructeurs/destructeurs :<br><br><code>// Parent<br>std::cout << \"Parent constructor\" << std::endl;<br>// Enfant<br>std::cout << \"Enfant constructor\" << std::endl;</code><br><br>Valide la compréhension du cycle de vie"
+    }
+  ]
+}
