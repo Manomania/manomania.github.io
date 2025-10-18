@@ -1,0 +1,108 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce qu'une exception en C++ ?",
+      "reponse": "Mécanisme pour gérer les <strong>erreurs exceptionnelles</strong> en séparant le code normal du code de gestion d'erreur.<br><br>Permet de remonter une erreur dans la pile d'appels jusqu'à trouver un gestionnaire approprié"
+    },
+    {
+      "question": "Quels sont les 3 mots-clés des exceptions ?",
+      "reponse": "<strong>throw</strong> : lance une exception<br><strong>try</strong> : délimite le bloc surveillé<br><strong>catch</strong> : capture et gère l'exception<br><br><code>try { code } catch (Type e) { gestion }</code>"
+    },
+    {
+      "question": "Syntaxe complète d'un bloc try-catch ?",
+      "reponse": "<code>try {<br>&nbsp;&nbsp;// code potentiellement dangereux<br>&nbsp;&nbsp;throw std::exception();<br>}<br>catch (std::exception& e) {<br>&nbsp;&nbsp;// gestion de l'erreur<br>&nbsp;&nbsp;std::cout << e.what() << std::endl;<br>}</code>"
+    },
+    {
+      "question": "Comment lancer une exception ?",
+      "reponse": "<code>throw TypeException(\"message\");</code><br><br>Exemples :<br><code>throw std::out_of_range(\"Index invalide\");<br>throw 42; // tout type possible<br>throw \"Erreur\"; // même une string</code><br><br>⚠️ Préférer des objets d'exception"
+    },
+    {
+      "question": "Que se passe-t-il quand une exception est lancée ?",
+      "reponse": "1. Exécution interrompue immédiatement<br>2. Remontée de la <strong>pile d'appels</strong> (stack unwinding)<br>3. Destructeurs appelés pour objets locaux<br>4. Recherche du premier <code>catch</code> compatible<br>5. Si aucun : <code>std::terminate()</code> → crash"
+    },
+    {
+      "question": "Qu'est-ce que le <em>stack unwinding</em> ?",
+      "reponse": "Processus de déroulement de la pile lors d'une exception :<br><br>- Sortie de chaque fonction jusqu'au catch<br>- Appel des destructeurs des objets locaux<br>- Libération automatique des ressources (principe RAII)<br><br>Garantit la propreté malgré l'erreur"
+    },
+    {
+      "question": "Pourquoi capturer par référence <code>catch (Type& e)</code> ?",
+      "reponse": "- Évite le <strong>slicing</strong> (perte d'info si exception dérivée)<br>- Évite la copie (performance)<br>- Permet le polymorphisme<br><br><code>catch (std::exception& e)</code> capture aussi les classes dérivées"
+    },
+    {
+      "question": "Comment capturer TOUTES les exceptions ?",
+      "reponse": "<code>catch (...) {<br>&nbsp;&nbsp;// gère tout type d'exception<br>&nbsp;&nbsp;std::cout << \"Erreur inconnue\" << std::endl;<br>}</code><br><br>⚠️ À utiliser en dernier recours, impossible de connaître le type"
+    },
+    {
+      "question": "Ordre des blocs <code>catch</code> ?",
+      "reponse": "<strong>Du plus spécifique au plus général</strong> :<br><br><code>catch (std::out_of_range& e) { }<br>catch (std::exception& e) { }<br>catch (...) { }</code><br><br>⚠️ Ordre inverse = code jamais atteint"
+    },
+    {
+      "question": "Qu'est-ce que <code>std::exception</code> ?",
+      "reponse": "Classe de base de la <strong>hiérarchie d'exceptions standard</strong>.<br><br>Méthode virtuelle : <code>const char* what() const</code> retourne le message d'erreur.<br><br>Toutes les exceptions standard en dérivent"
+    },
+    {
+      "question": "Quelles sont les exceptions standard les plus courantes ?",
+      "reponse": "<code>std::logic_error</code> : erreurs logiques<br>- <code>std::invalid_argument</code><br>- <code>std::out_of_range</code><br><br><code>std::runtime_error</code> : erreurs runtime<br>- <code>std::overflow_error</code><br>- <code>std::underflow_error</code>"
+    },
+    {
+      "question": "Comment créer une exception personnalisée ?",
+      "reponse": "Hériter de <code>std::exception</code> et redéfinir <code>what()</code> :<br><br><code>class MonException : public std::exception {<br>public:<br>&nbsp;&nbsp;const char* what() const throw() {<br>&nbsp;&nbsp;&nbsp;&nbsp;return \"Mon message\";<br>&nbsp;&nbsp;}<br>};</code>"
+    },
+    {
+      "question": "Pourquoi <code>what()</code> retourne <code>const char*</code> et non <code>std::string</code> ?",
+      "reponse": "Pour garantir qu'elle ne lance <strong>jamais d'exception</strong> elle-même.<br><br><code>std::string</code> peut échouer (allocation mémoire).<br><br><code>const char*</code> est sûr à 100%"
+    },
+    {
+      "question": "Que signifie <code>throw()</code> après la déclaration de <code>what()</code> ?",
+      "reponse": "<strong>Spécification d'exception</strong> (deprecated en C++11) indiquant que la fonction ne lance pas d'exception.<br><br>C++11+ : utiliser <code>noexcept</code> à la place<br><br>En C++98 : <code>throw()</code> obligatoire pour <code>what()</code>"
+    },
+    {
+      "question": "Peut-on relancer une exception dans un <code>catch</code> ?",
+      "reponse": "OUI avec <code>throw;</code> (sans paramètre) :<br><br><code>catch (std::exception& e) {<br>&nbsp;&nbsp;std::cerr << e.what() << std::endl;<br>&nbsp;&nbsp;throw; // relance la même exception<br>}</code><br><br>Préserve le type exact de l'exception"
+    },
+    {
+      "question": "Différence entre <code>throw e;</code> et <code>throw;</code> dans un catch ?",
+      "reponse": "<code>throw e;</code> : relance une <strong>copie</strong> (slicing possible)<br><code>throw;</code> : relance l'<strong>exception originale</strong> (préserve le type)<br><br>✅ Toujours utiliser <code>throw;</code>"
+    },
+    {
+      "question": "Peut-on avoir un <code>try</code> sans <code>catch</code> ?",
+      "reponse": "OUI mais peu utile seul. Pattern valide :<br><br><code>try {<br>&nbsp;&nbsp;// code<br>}<br>catch (...) {<br>&nbsp;&nbsp;// cleanup<br>&nbsp;&nbsp;throw; // relance<br>}</code><br><br>Permet du cleanup avant propagation"
+    },
+    {
+      "question": "Peut-on imbriquer des blocs try-catch ?",
+      "reponse": "OUI, c'est courant :<br><br><code>try {<br>&nbsp;&nbsp;try {<br>&nbsp;&nbsp;&nbsp;&nbsp;// opération risquée<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;catch (SpecificError& e) { }<br>}<br>catch (std::exception& e) { }</code><br><br>Permet gestion granulaire"
+    },
+    {
+      "question": "Quand utiliser les exceptions vs codes d'erreur ?",
+      "reponse": "<strong>Exceptions</strong> : erreurs exceptionnelles (fichier manquant, mémoire pleine)<br><strong>Codes retour</strong> : situations normales prévisibles<br><br>Règle : si l'erreur est <strong>rare</strong> et <strong>grave</strong> → exception"
+    },
+    {
+      "question": "Que signifie RAII dans le contexte des exceptions ?",
+      "reponse": "<strong>Resource Acquisition Is Initialization</strong><br><br>Les ressources acquises dans le constructeur sont automatiquement libérées dans le destructeur.<br><br>Le stack unwinding appelle les destructeurs → libération garantie même avec exception"
+    },
+    {
+      "question": "Pourquoi ne JAMAIS lancer d'exception dans un destructeur ?",
+      "reponse": "Si une exception est déjà en cours (stack unwinding) et qu'une deuxième est lancée dans un destructeur :<br><br>→ <code>std::terminate()</code> appelé<br>→ <strong>Crash immédiat</strong><br><br>Règle d'or : destructeurs = <code>noexcept</code>"
+    },
+    {
+      "question": "Comment gérer une erreur dans un destructeur alors ?",
+      "reponse": "- Logger l'erreur<br>- Ignorer (si non-critique)<br>- Offrir une méthode <code>close()</code> explicite qui peut throw<br><br>Exemple : fichiers → <code>close()</code> peut throw, destructeur ignore en silence"
+    },
+    {
+      "question": "Qu'est-ce qu'une <em>exception specification</em> ?",
+      "reponse": "Ancienne syntaxe C++98 déclarant quelles exceptions une fonction peut lancer :<br><br><code>void foo() throw(std::exception);</code><br><br>⚠️ Deprecated en C++11, supprimé en C++17. Ne plus utiliser."
+    },
+    {
+      "question": "Performance : les exceptions sont-elles coûteuses ?",
+      "reponse": "<strong>Pas de coût</strong> si aucune exception lancée (zero-cost abstraction moderne).<br><br><strong>Coût important</strong> quand exception lancée (stack unwinding).<br><br>→ OK pour erreurs rares, éviter pour contrôle de flux"
+    },
+    {
+      "question": "Pattern typique pour valider un paramètre avec exception ?",
+      "reponse": "<code>void setAge(int age) {<br>&nbsp;&nbsp;if (age < 0 || age > 150)<br>&nbsp;&nbsp;&nbsp;&nbsp;throw std::out_of_range(\"Âge invalide\");<br>&nbsp;&nbsp;_age = age;<br>}</code><br><br>Lance exception si violation de contrat"
+    },
+    {
+      "question": "Comment inclure les exceptions standard ?",
+      "reponse": "<code>#include &lt;exception&gt;</code> : classe de base<br><code>#include &lt;stdexcept&gt;</code> : exceptions standard (logic_error, runtime_error, etc.)<br><br>À 42 : inclure les deux pour utilisation complète"
+    }
+  ]
+}
