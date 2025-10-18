@@ -1,0 +1,104 @@
+{
+  "cards": [
+    {
+      "question": "Qu'est-ce que la forme canonique orthodoxe (Orthodox Canonical Form) ?",
+      "reponse": "Standard C++98 imposant 4 méthodes obligatoires dans toute classe :<br><br>1. Constructeur par défaut<br>2. Constructeur de copie<br>3. Opérateur d'affectation<br>4. Destructeur<br><br><strong>Obligatoire à partir de CPP02</strong>"
+    },
+    {
+      "question": "Pourquoi ces 4 méthodes sont-elles fondamentales ?",
+      "reponse": "Elles contrôlent le <strong>cycle de vie complet</strong> d'un objet :<br><br>- Création (constructeur)<br>- Copie (copy constructor)<br>- Réaffectation (operator=)<br>- Destruction (destructeur)<br><br>Sans elles : comportements par défaut souvent incorrects"
+    },
+    {
+      "question": "Que génère le compilateur si on ne définit pas ces méthodes ?",
+      "reponse": "Des versions <strong>par défaut</strong> qui font :<br><br>- Constructeur : rien (membres non initialisés)<br>- Copie : copie membre à membre (shallow copy)<br>- Affectation : copie membre à membre<br>- Destructeur : rien<br><br>⚠️ Problématique avec allocation dynamique"
+    },
+    {
+      "question": "Qu'est-ce qu'une shallow copy (copie superficielle) ?",
+      "reponse": "Copie des valeurs brutes des attributs, <strong>incluant les adresses de pointeurs</strong>.<br><br>Résultat : deux objets partagent le même pointeur<br><br>⚠️ Double free au delete !"
+    },
+    {
+      "question": "Qu'est-ce qu'une deep copy (copie profonde) ?",
+      "reponse": "Copie qui alloue <strong>nouvelle mémoire</strong> et duplique le contenu pointé.<br><br>Résultat : deux objets indépendants avec leurs propres données<br><br>✅ Nécessaire pour gestion mémoire correcte"
+    },
+    {
+      "question": "Template de forme canonique à 42 ?",
+      "reponse": "<code>class MaClasse {<br>public:<br>&nbsp;&nbsp;MaClasse(); // constructeur défaut<br>&nbsp;&nbsp;MaClasse(const MaClasse& src); // copie<br>&nbsp;&nbsp;MaClasse& operator=(const MaClasse& rhs);<br>&nbsp;&nbsp;~MaClasse(); // destructeur<br>};</code>"
+    },
+    {
+      "question": "Pourquoi le paramètre du constructeur de copie est <code>const&</code> ?",
+      "reponse": "<strong>const</strong> : on ne modifie pas l'objet source<br><strong>&</strong> : évite copie infinie (sinon passage par valeur → copie → passage par valeur → ...)<br><br>Format standard obligatoire"
+    },
+    {
+      "question": "Que doit faire un constructeur de copie ?",
+      "reponse": "Créer un <strong>nouvel objet</strong> identique mais indépendant :<br><br>1. Copier les attributs simples<br>2. Deep copy des pointeurs<br>3. Allouer nouvelle mémoire si nécessaire<br><br>Ne modifie JAMAIS la source"
+    },
+    {
+      "question": "Pattern typique d'un constructeur de copie avec allocation dynamique ?",
+      "reponse": "<code>MaClasse::MaClasse(const MaClasse& src) {<br>&nbsp;&nbsp;_ptr = new Type(*src._ptr); // deep copy<br>&nbsp;&nbsp;_value = src._value; // copie simple<br>}</code>"
+    },
+    {
+      "question": "Quand le constructeur de copie est-il appelé ?",
+      "reponse": "3 situations :<br><br>1. <code>MaClasse obj2 = obj1;</code> (initialisation)<br>2. <code>MaClasse obj2(obj1);</code> (construction)<br>3. Passage par valeur : <code>fonction(obj)</code><br><br>⚠️ Pas lors de <code>obj2 = obj1;</code> après création (operator=)"
+    },
+    {
+      "question": "Que retourne <code>operator=</code> et pourquoi ?",
+      "reponse": "Retourne <code>*this</code> par référence : <code>MaClasse&</code><br><br>Permet les affectations en chaîne :<br><code>a = b = c;</code><br><br>Équivaut à : <code>a.operator=(b.operator=(c));</code>"
+    },
+    {
+      "question": "Quelle est la première étape OBLIGATOIRE dans <code>operator=</code> ?",
+      "reponse": "<strong>Test d'auto-affectation</strong> :<br><br><code>if (this == &rhs)<br>&nbsp;&nbsp;return *this;</code><br><br>Évite de détruire l'objet avant de le copier lors de <code>obj = obj;</code>"
+    },
+    {
+      "question": "Pattern complet d'un <code>operator=</code> ?",
+      "reponse": "<code>MaClasse& MaClasse::operator=(const MaClasse& rhs) {<br>&nbsp;&nbsp;if (this != &rhs) {<br>&nbsp;&nbsp;&nbsp;&nbsp;delete _ptr; // libère ancien<br>&nbsp;&nbsp;&nbsp;&nbsp;_ptr = new Type(*rhs._ptr); // deep copy<br>&nbsp;&nbsp;&nbsp;&nbsp;_value = rhs._value;<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;return *this;<br>}</code>"
+    },
+    {
+      "question": "Pourquoi libérer l'ancienne mémoire dans <code>operator=</code> ?",
+      "reponse": "L'objet existe déjà et peut avoir alloué de la mémoire.<br><br>Sans <code>delete</code> avant réaffectation : <strong>fuite mémoire</strong><br><br>⚠️ Faire APRÈS le test d'auto-affectation"
+    },
+    {
+      "question": "Différence fondamentale entre constructeur de copie et <code>operator=</code> ?",
+      "reponse": "<strong>Constructeur de copie</strong> : crée un nouvel objet (mémoire vierge)<br><strong>operator=</strong> : réutilise un objet existant (doit nettoyer l'ancien état)<br><br>Le deuxième doit faire <code>delete</code> avant copie"
+    },
+    {
+      "question": "Qu'est-ce que la règle des 3 (Rule of Three) ?",
+      "reponse": "Si une classe définit l'UN de ces éléments, elle doit définir les TROIS :<br><br>1. Destructeur<br>2. Constructeur de copie<br>3. Opérateur d'affectation<br><br>Sinon : fuites mémoire ou double free"
+    },
+    {
+      "question": "Pourquoi la règle des 3 existe-t-elle ?",
+      "reponse": "Si on a besoin d'un destructeur personnalisé, c'est qu'on gère des <strong>ressources</strong> (mémoire, fichiers, etc.).<br><br>→ La copie par défaut (shallow) est insuffisante<br>→ Il faut une deep copy<br><br>C'est un indicateur de gestion manuelle"
+    },
+    {
+      "question": "Que se passe-t-il si on oublie le constructeur de copie avec allocation dynamique ?",
+      "reponse": "Shallow copy par défaut :<br><br>1. Deux objets partagent le même pointeur<br>2. Premier objet détruit → <code>delete</code> du pointeur<br>3. Deuxième objet détruit → <code>delete</code> du même pointeur<br><br>⚠️ <strong>Double free = crash</strong>"
+    },
+    {
+      "question": "Exemple de bug classique sans forme canonique ?",
+      "reponse": "<code>MaClasse a;<br>MaClasse b = a; // shallow copy<br>// a et b partagent _ptr<br>} // destructeurs: double delete → segfault</code><br><br>Solution : implémenter constructeur de copie avec deep copy"
+    },
+    {
+      "question": "Comment tester si la forme canonique est correcte ?",
+      "reponse": "Code de test typique :<br><br><code>MaClasse a;<br>MaClasse b(a); // test copy constructor<br>MaClasse c;<br>c = a; // test operator=<br>c = c; // test auto-affectation</code><br><br>Vérifier avec valgrind : 0 fuite, 0 erreur"
+    },
+    {
+      "question": "Messages de debug recommandés pour la forme canonique ?",
+      "reponse": "<code>std::cout << \"Default constructor\" << std::endl;<br>std::cout << \"Copy constructor\" << std::endl;<br>std::cout << \"Copy assignment operator\" << std::endl;<br>std::cout << \"Destructor\" << std::endl;</code><br><br>Permet de tracer les appels"
+    },
+    {
+      "question": "Que valide la moulinette sur la forme canonique ?",
+      "reponse": "- Présence des 4 méthodes<br>- Gestion correcte de la mémoire (pas de fuite)<br>- Deep copy fonctionnelle<br>- Auto-affectation sans crash<br>- Destructeurs appelés dans le bon ordre"
+    },
+    {
+      "question": "Peut-on interdire la copie d'une classe ?",
+      "reponse": "OUI, en déclarant privées les méthodes de copie sans les implémenter (C++98) :<br><br><code>private:<br>&nbsp;&nbsp;MaClasse(const MaClasse&);<br>&nbsp;&nbsp;MaClasse& operator=(const MaClasse&);</code><br><br>Erreur de compilation si copie tentée"
+    },
+    {
+      "question": "Forme canonique pour une classe sans allocation dynamique ?",
+      "reponse": "Toujours les 4 méthodes, mais versions simplifiées :<br><br>- Constructeur de copie : copie membre à membre suffit<br>- operator= : idem + test auto-affectation<br>- Destructeur : souvent vide<br><br>Mais obligatoire de les définir explicitement"
+    },
+    {
+      "question": "Checklist avant de rendre un exercice CPP02+ ?",
+      "reponse": "✅ 4 méthodes présentes et déclarées<br>✅ Messages de debug dans chaque méthode<br>✅ Test d'auto-affectation dans operator=<br>✅ Deep copy si pointeurs<br>✅ Valgrind OK (0 fuite, 0 erreur)<br>✅ Compilation sans warning"
+    }
+  ]
+}
